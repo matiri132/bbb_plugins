@@ -8,8 +8,8 @@ PATH_DST="/var/www/bigbluebutton-default/record"
 HOSTNAME="bbbd.vidalsystem.com"
 PROC_min=4
 PROC_max=8
-
-APPDIR="/root/bbb_converter"
+#Path of bbb-recorder installation
+APPDIR="/root/bbb-recorder"
 
 ###########################################################################
 
