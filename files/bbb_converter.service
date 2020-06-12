@@ -1,0 +1,15 @@
+[Unit]
+Description=MP4 converter for BBB
+After=bbb-web.service 
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=APPDIR/bbb_converter.sh
+Restart=on-failure
+RestartSec=10s
+
+
+[Install]
+WantedBy=multi-user.target
