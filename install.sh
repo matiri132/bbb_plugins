@@ -35,5 +35,7 @@ cp ${WD}/bbb_converter.service /etc/systemd/system/bbb_converter.service
 systemctl enable bbb_converter.service
 systemctl start bbb_converter.service
 
+rm ${WD}/bbb_converter.service bbb_converter.sh
+
 
 
