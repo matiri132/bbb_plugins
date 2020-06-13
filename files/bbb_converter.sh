@@ -31,11 +31,12 @@ set_nproc(){
 
 refresh_log(){
     ACT_HOUR=$(/bin/date +%s)
-    if [ ( "${ACT_HOUR}" - "${LAST_HOUR}" ) -gt 600 ]
+    t_elap=$(expr ${ACT_HOUR} - ${LAST_HOUR})
+    if [  ${t_elap}  -gt 60 ]
     then
         LAST_HOUR="${ACT_HOUR}"
-        cat /var/log/bbb_conv.log | grep -A 3 "Error" >> /var/log_conv_err.log
-        cat /var/log/bbb_conv.log | grep -A 1 "Convertion done to here:" >> /var/log_conv_ok.log
+        cat /var/log/bbb_conv.log | grep -A 3 "Error" >> /var/log/bbb_conv_err.log
+        cat /var/log/bbb_conv.log | grep -A 1 "Convertion done to here:" >> /var/log/bbb_conv_ok.log
     fi
 
 }
@@ -78,8 +79,7 @@ set_nproc
 init_arrays
 
 while true
-do 
-    refresh_log  
+do    
     INDEX=0
     while [ "${INDEX}" -lt "${PROC_n}" ]
     do
@@ -113,5 +113,6 @@ do
         fi
         INDEX=$((${INDEX}+1))
     done
+    refresh_log 
     sleep 5
 done
