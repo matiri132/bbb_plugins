@@ -56,6 +56,8 @@ case $1 in
         #logs
         cp ${WD}/files/bbb_conv.conf /etc/rsyslog.d/bbb_conv.conf
         touch /var/log/bbb_conv.log
+        touch /var/log/bbb_conv_err.log
+        touch /var/log/bbb_conv_ok.log
         chown syslog:adm /var/log/bbb_conv.log
         systemctl restart syslog
 

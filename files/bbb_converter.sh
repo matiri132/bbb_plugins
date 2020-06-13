@@ -14,6 +14,8 @@ PROC_n=0
 INDEX=0
 declare -a FILE_IN_PROC 
 declare -a PID_IN_PROC
+ACT_HOUR=$(/bin/date +%s)
+LAST_HOUR=$(/bin/date +%s)
 
 shopt -s nullglob
 
@@ -25,6 +27,17 @@ set_nproc(){
     else
         PROC_n="${PROC_max}"
     fi    
+}
+
+refresh_log(){
+    ACT_HOUR=$(/bin/date +%s)
+    if [ ( "${ACT_HOUR}" - "${LAST_HOUR}" ) -gt 600 ]
+    then
+        LAST_HOUR="${ACT_HOUR}"
+        cat /var/log/bbb_conv.log | grep -A 3 "Error" >> /var/log_conv_err.log
+        cat /var/log/bbb_conv.log | grep -A 1 "Convertion done to here:" >> /var/log_conv_ok.log
+    fi
+
 }
 
 init_arrays(){
@@ -66,7 +79,7 @@ init_arrays
 
 while true
 do 
-    #set_nproc   
+    refresh_log  
     INDEX=0
     while [ "${INDEX}" -lt "${PROC_n}" ]
     do
