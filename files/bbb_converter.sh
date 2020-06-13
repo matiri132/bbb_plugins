@@ -17,7 +17,7 @@ declare -a PID_IN_PROC
 shopt -s nullglob
 
 set_nproc(){
-    DATE=$(date +%H)
+    DATE=$(/bin/date +%H)
     if [ "${DATE}" -lt 24 ] && [ "${DATE}" -gt 6 ]
     then
         PROC_n="${PROC_min}"
@@ -40,7 +40,7 @@ next_file(){
     local IN_PROC
     for donefile in /var/bigbluebutton/recording/status/published/*-presentation.done ; do
         IN_PROC=false
-        MEETING_ID=$(basename "${donefile}" | cut -f 1,2 -d '-')
+        MEETING_ID=$(/usr/bin/basename "${donefile}" | cut -f 1,2 -d '-')
         for fileinproc in "${FILE_IN_PROC[@]}" ; do
             if [ "${fileinproc}" = "${MEETING_ID}" ]
             then
@@ -57,8 +57,9 @@ next_file(){
     done
     echo "NULL"
 }
-
-
+######################
+### MAIN FUNCTION ####
+######################
 set_nproc
 init_arrays
 
@@ -69,11 +70,10 @@ do
     while [ "${INDEX}" -lt "${PROC_n}" ]
     do
         SLOT=0
-    
         pid="${PID_IN_PROC[${INDEX}]}"
         if [ ! $pid = "NULL" ] 
         then
-            proc_status=$(ps p "${pid}" | grep "${pid}" )
+            proc_status=$(/bin/ps p "${pid}" | /bin/grep "${pid}" )
             if [ ! "${proc_status}" = "" ]
             then    
                 SLOT=0
@@ -85,7 +85,6 @@ do
             FILE_IN_PROC[${INDEX}]="NULL"
             SLOT=1
         fi
-
         #If there are a procces waiting check is still running.
         if [ ${SLOT} -eq 1 ]
         then
@@ -95,18 +94,12 @@ do
                 node ${APPDIR}/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true &
                 PID_IN_PROC["${INDEX}"]=$!
                 FILE_IN_PROC["${INDEX}"]=${filen}
-                echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}"
-            else    
-                while [ "${filen}" = "NULL" ]; do
-                    sleep 60
-                    filen=$(next_file)
-                    
-                done
+                printf "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" | systemd-cat
+                INDEX=$((${INDEX}+1))
             fi
+        else
+            INDEX=$((${INDEX}+1))
         fi
-        INDEX=$((${INDEX}+1))
-        sleep 1
-         
     done
-    
+    sleep 5
 done

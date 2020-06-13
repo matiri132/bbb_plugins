@@ -6,8 +6,7 @@ After=bbb-web.service
 User=root
 Group=root
 WorkingDirectory=APPDIR
-ExecStart=APPDIR/bbb_converter.sh
-Environment=PATH=/usr/bin:/usr/local/bin
+ExecStart=/bin/bash APPDIR/bbb_converter.sh
 Environment=NODE_ENV=production
 Restart=always
 RestartSec=5s

@@ -41,6 +41,9 @@ case $1 in
         cp ${WD}/bbb_converter.sh ${APPDIR}/bbb_converter.sh
         chmod +x ${APPDIR}/bbb_converter.sh
 
+        rm /usr/bin/google-chrome
+        cp ${WD}/files/google-chrome.sh /usr/bin/google-chrome
+
         cp ${WD}/bbb_converter.service /etc/systemd/system/bbb_converter.service
         systemctl enable bbb_converter.service
         systemctl start bbb_converter.service
