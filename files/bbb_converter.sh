@@ -90,11 +90,10 @@ do
         if [ ${SLOT} -eq 1 ]
         then
             filen=$(next_file)
-            
-            echo "${INDEX} - ${filen} - ${SLOT}"
             if [ ! "${filen}" = "NULL" ]
             then
-                node "${REC_PATH}"/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen}.mp4 0 true &
+                echo "${INDEX} - ${filen} - ${PID_IN_PROC[${INDEX}]}"
+                node "${REC_PATH}"/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true &
                 PID_IN_PROC["${INDEX}"]=$!
                 FILE_IN_PROC["${INDEX}"]=${filen}
             else    

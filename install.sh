@@ -17,30 +17,36 @@ APPDIR="/root/bbb-recorder"
 WD=$(pwd)
 
 #Preparing installation
+case $1 in
+    install)
+        cp ${WD}/files/bbb_converter.sh ${WD}/bbb_converter.sh
+        sed -i "s|PATHS|"${PATH_SRC}"|g" ${WD}/bbb_converter.sh
+        sed -i "s|PATHD|"${PATH_DST}"|g" ${WD}/bbb_converter.sh
+        sed -i "s|HNAM|"${HOSTNAME}"|g" ${WD}/bbb_converter.sh
+        sed -i "s|PR_m|"${PROC_min}"|g" ${WD}/bbb_converter.sh
+        sed -i "s|PR_M|"${PROC_max}"|g" ${WD}/bbb_converter.sh
+        sed -i "s|REC_PATH|"${APPDIR}"|g" ${WD}/bbb_converter.sh
 
-cp ${WD}/files/bbb_converter.sh ${WD}/bbb_converter.sh
-sed -i "s|PATHS|"${PATH_SRC}"|g" ${WD}/bbb_converter.sh
-sed -i "s|PATHD|"${PATH_DST}"|g" ${WD}/bbb_converter.sh
-sed -i "s|HNAM|"${HOSTNAME}"|g" ${WD}/bbb_converter.sh
-sed -i "s|PR_m|"${PROC_min}"|g" ${WD}/bbb_converter.sh
-sed -i "s|PR_M|"${PROC_max}"|g" ${WD}/bbb_converter.sh
-sed -i "s|REC_PATH|"${APPDIR}"|g" ${WD}/bbb_converter.sh
+        cp ${WD}/files/bbb_converter.service ${WD}/bbb_converter.service
+        sed -i "s|APPDIR|"${APPDIR}"|g" ${WD}/bbb_converter.service
 
-cp ${WD}/files/bbb_converter.service ${WD}/bbb_converter.service
-sed -i "s|APPDIR|"${APPDIR}"|g" ${WD}/bbb_converter.service
+        if [ ! -d ${PATH_DST} ]
+        then
+            mkdir -p ${PATH_DST}
 
-if [ ! -d ${PATH_DST} ]
-then
-    mkdir -p ${PATH_DST}
+        mkdir ${APPDIR}
+        cp ${WD}/bbb_converter.sh ${APPDIR}/bbb_converter.sh
+        chmod +x ${APPDIR}/bbb_converter.sh
 
-mkdir ${APPDIR}
-cp ${WD}/bbb_converter.sh ${APPDIR}/bbb_converter.sh
-chmod +x ${APPDIR}/bbb_converter.sh
+        cp ${WD}/bbb_converter.service /etc/systemd/system/bbb_converter.service
+        systemctl enable bbb_converter.service
+        systemctl start bbb_converter.service
 
-cp ${WD}/bbb_converter.service /etc/systemd/system/bbb_converter.service
-systemctl enable bbb_converter.service
-systemctl start bbb_converter.service
+        rm ${WD}/bbb_converter.service bbb_converter.sh
 
-rm ${WD}/bbb_converter.service bbb_converter.sh
-
-
+    ;;
+    
+    uninstall)
+        systemctl disable bbb_converter.service
+        rm ${APPDIR}/bbb_converter.sh
+    ;;
