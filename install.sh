@@ -52,9 +52,9 @@ case $1 in
         fi
         cp ${WD}/bbb_converter.sh ${APPDIR}/bbb_converter.sh
         chmod +x ${APPDIR}/bbb_converter.sh
+        
         #patch google
-
-        #rm /opt/google/chrome/google-chrome
+        
         #cp ${WD}/files/google-chrome.sh /opt/google/chrome/google-chrome
         #chmod +x /opt/google/chrome/google-chrome
 

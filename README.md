@@ -15,12 +15,18 @@ sudo chmod +x install.sh
 ```
 3. Configuration:
 ```
-With nano install.sh you can configure the service functions:
+cd bbb_converter
+nano install.sh
+
+Configure:
+
 PATH_SRC= Folder which contains the playbacks recordings
 PATH_DST= Folder where are the output conversions (to change this first change bbb-recorder)
 HOSTNAME= Hostname of your BBB server.
-PROC_min= Quantity of paralel conversions during the day ( 6am - 11:59pm)
-PROC_max= Quantity of paralel conversions during the day ( 0:00am - 6am)
+PROC_min= Quantity of paralel conversions during the day ( M_HOUR - N_HOUR)
+PROC_max= Quantity of paralel conversions during the day ( N_HOUR - M_HOUR)
+N_HOUR=Top hour
+M_HOUR=Min hour
 APPDIR= Path of bbb-recorder installation
 ```
 4. Install (with SUDO or root user without sudo):
