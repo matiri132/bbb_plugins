@@ -47,6 +47,7 @@ case $1 in
     ;;
     
     uninstall)
+        systemctl stop bbb_converter.service
         systemctl disable bbb_converter.service
         rm ${APPDIR}/bbb_converter.sh
     ;;

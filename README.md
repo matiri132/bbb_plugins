@@ -25,7 +25,7 @@ APPDIR= Path of bbb-recorder installation
 ```
 4. Install (with SUDO or root user without sudo):
 ```
-sudo ./install.sh
+sudo ./install.sh install
 ```
 
 5. Control:
@@ -41,5 +41,8 @@ systemctl disable bbb_converter.service
 
 To quit bbb_converter on boot:
 systemctl disable bbb_converter.service
+
+To full uninstall:
+./install.sh uninstall
 ```
 
