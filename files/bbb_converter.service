@@ -5,11 +5,12 @@ After=bbb-web.service
 [Service]
 User=root
 Group=root
-Type=simple
 WorkingDirectory=APPDIR
 ExecStart=APPDIR/bbb_converter.sh
-Restart=on-failure
-RestartSec=10s
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+Restart=always
+RestartSec=5s
 
 
 [Install]

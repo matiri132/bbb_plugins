@@ -92,10 +92,10 @@ do
             filen=$(next_file)
             if [ ! "${filen}" = "NULL" ]
             then
-                echo "${INDEX} - ${filen} - ${PID_IN_PROC[${INDEX}]}"
-                node "${REC_PATH}"/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true &
+                node ${APPDIR}/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true &
                 PID_IN_PROC["${INDEX}"]=$!
                 FILE_IN_PROC["${INDEX}"]=${filen}
+                echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}"
             else    
                 while [ "${filen}" = "NULL" ]; do
                     sleep 60

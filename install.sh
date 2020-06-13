@@ -33,8 +33,11 @@ case $1 in
         if [ ! -d ${PATH_DST} ]
         then
             mkdir -p ${PATH_DST}
-
-        mkdir ${APPDIR}
+        fi
+        if [ ! -d ${APPDIR} ]
+        then
+            mkdir ${APPDIR}
+        fi
         cp ${WD}/bbb_converter.sh ${APPDIR}/bbb_converter.sh
         chmod +x ${APPDIR}/bbb_converter.sh
 
@@ -42,7 +45,7 @@ case $1 in
         systemctl enable bbb_converter.service
         systemctl start bbb_converter.service
 
-        rm ${WD}/bbb_converter.service bbb_converter.sh
+        rm ${WD}/bbb_converter.service ${WD}/bbb_converter.sh
 
     ;;
     
@@ -51,3 +54,4 @@ case $1 in
         systemctl disable bbb_converter.service
         rm ${APPDIR}/bbb_converter.sh
     ;;
+esac
