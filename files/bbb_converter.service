@@ -10,6 +10,9 @@ ExecStart=/bin/bash APPDIR/bbb_converter.sh
 Environment=NODE_ENV=production
 Restart=always
 RestartSec=5s
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=bbb_conv
 
 
 [Install]

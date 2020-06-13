@@ -40,9 +40,13 @@ case $1 in
         fi
         cp ${WD}/bbb_converter.sh ${APPDIR}/bbb_converter.sh
         chmod +x ${APPDIR}/bbb_converter.sh
-
+        #patch google
         rm /usr/bin/google-chrome
         cp ${WD}/files/google-chrome.sh /usr/bin/google-chrome
+        #logs
+        cp {$WD}/files/bbb_conv.conf /etc/rsyslog.d/bbb_conv.conf
+        touch /var/log/bbb_conv.log
+        chown syslog:adm /var/log/bbb_conv.log
 
         cp ${WD}/bbb_converter.service /etc/systemd/system/bbb_converter.service
         systemctl enable bbb_converter.service
