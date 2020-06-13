@@ -5,7 +5,8 @@ HOSTNAME="HNAM"
 PROC_min=PR_m
 PROC_max=PR_M
 APPDIR="REC_PATH"
-
+TOP_HOUR=TP_h
+BOT_HOUR=BT_h
 LOGFILE=""
 
 #4 procesos por defecto
@@ -18,7 +19,7 @@ shopt -s nullglob
 
 set_nproc(){
     DATE=$(/bin/date +%H)
-    if [ "${DATE}" -lt 24 ] && [ "${DATE}" -gt 6 ]
+    if [ "${DATE}" -lt "${TOP_HOUR}" ] && [ "${DATE}" -gt "${BOT_HOUR}" ]
     then
         PROC_n="${PROC_min}"
     else
@@ -40,7 +41,7 @@ next_file(){
     local IN_PROC
     for donefile in /var/bigbluebutton/recording/status/published/*-presentation.done ; do
         IN_PROC=false
-        MEETING_ID=$(/usr/bin/basename "${donefile}" | cut -f 1,2 -d '-')
+        MEETING_ID=$(/usr/bin/basename "${donefile}" | /usr/bin/cut -f 1,2 -d '-')
         for fileinproc in "${FILE_IN_PROC[@]}" ; do
             if [ "${fileinproc}" = "${MEETING_ID}" ]
             then
@@ -94,12 +95,10 @@ do
                 node ${APPDIR}/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true &
                 PID_IN_PROC["${INDEX}"]=$!
                 FILE_IN_PROC["${INDEX}"]=${filen}
-                printf "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" | systemd-cat
-                INDEX=$((${INDEX}+1))
-            fi
-        else
-            INDEX=$((${INDEX}+1))
+                echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" 
+            fi            
         fi
+        INDEX=$((${INDEX}+1))
     done
     sleep 5
 done
