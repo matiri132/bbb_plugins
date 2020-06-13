@@ -1,7 +1,8 @@
 #!/bin/bash
+
 ###########################################################################
 #
-#CONFIGURATION:
+#CONFIGURATION: See "README.md"
 #
 PATH_SRC="/var/bigbluebutton/recording/status/published/*-presentation.done"
 PATH_DST="/var/www/bigbluebutton-default/record"
@@ -22,10 +23,15 @@ sed -i "s|PATHS|"${PATH_SRC}"|g" ${WD}/bbb_converter.sh
 sed -i "s|PATHD|"${PATH_DST}"|g" ${WD}/bbb_converter.sh
 sed -i "s|HNAM|"${HOSTNAME}"|g" ${WD}/bbb_converter.sh
 sed -i "s|PR_m|"${PROC_min}"|g" ${WD}/bbb_converter.sh
-sed -i "s|PR_M/"${PROC_max}"|g" ${WD}/bbb_converter.sh
+sed -i "s|PR_M|"${PROC_max}"|g" ${WD}/bbb_converter.sh
+sed -i "s|REC_PATH|"${APPDIR}"|g" ${WD}/bbb_converter.sh
 
 cp ${WD}/files/bbb_converter.service ${WD}/bbb_converter.service
 sed -i "s|APPDIR|"${APPDIR}"|g" ${WD}/bbb_converter.service
+
+if [ ! -d ${PATH_DST} ]
+then
+    mkdir -p ${PATH_DST}
 
 mkdir ${APPDIR}
 cp ${WD}/bbb_converter.sh ${APPDIR}/bbb_converter.sh
@@ -36,6 +42,5 @@ systemctl enable bbb_converter.service
 systemctl start bbb_converter.service
 
 rm ${WD}/bbb_converter.service bbb_converter.sh
-
 
 

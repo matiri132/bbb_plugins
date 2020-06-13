@@ -4,6 +4,7 @@ PATH_DST="PATHD"
 HOSTNAME="HNAM"
 PROC_min=PR_m
 PROC_max=PR_M
+APPDIR="REC_PATH"
 
 LOGFILE=""
 
@@ -93,14 +94,14 @@ do
             echo "${INDEX} - ${filen} - ${SLOT}"
             if [ ! "${filen}" = "NULL" ]
             then
-                node export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen}.mp4 0 true &
-                #convert ${PATH_SRC}/${filen}.jpg ${PATH_DST}/${filen}.png &
+                node "${REC_PATH}"/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen}.mp4 0 true &
                 PID_IN_PROC["${INDEX}"]=$!
                 FILE_IN_PROC["${INDEX}"]=${filen}
             else    
                 while [ "${filen}" = "NULL" ]; do
+                    sleep 60
                     filen=$(next_file)
-                    sleep 1
+                    
                 done
             fi
         fi
