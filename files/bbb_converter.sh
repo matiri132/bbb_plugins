@@ -8,6 +8,7 @@ APPDIR="REC_PATH"
 TOP_HOUR=TP_h
 BOT_HOUR=BT_h
 LOGFILE=""
+LOG_RM=LOGDAYS
 
 #4 procesos por defecto
 PROC_n=0
@@ -16,6 +17,7 @@ declare -a FILE_IN_PROC
 declare -a PID_IN_PROC
 ACT_HOUR=$(/bin/date +%s)
 LAST_HOUR=$(/bin/date +%s)
+LOG_TIME=$(/bin/date +%s)
 
 shopt -s nullglob
 
@@ -31,12 +33,23 @@ set_nproc(){
 
 refresh_log(){
     ACT_HOUR=$(/bin/date +%s)
-    t_elap=$(expr ${ACT_HOUR} - ${LAST_HOUR})
+    t_elap=$(( ${ACT_HOUR} - ${LAST_HOUR}))
     if [  ${t_elap}  -gt 60 ]
     then
         LAST_HOUR="${ACT_HOUR}"
-        cat /var/log/bbb_conv.log | grep -A 3 "Error" >> /var/log/bbb_conv_err.log
-        cat /var/log/bbb_conv.log | grep -A 1 "Convertion done to here:" >> /var/log/bbb_conv_ok.log
+        cat /var/log/bbb_conv.log | grep -A 3 "Error" > /var/log/bbb_conv_err.log
+        cat /var/log/bbb_conv.log | grep -A 1 "Convertion done to here:" > /var/log/bbb_conv_ok.log
+    fi
+    day_elap=$(((${ACT_HOUR} - ${LOG_TIME})/86400 ))
+    if [  ${day_elap}  -gt $(( ${LOG_RM} - 1 ))  ]
+    then
+        LOG_TIME=$(/bin/date +%s)
+        rm /var/log/bbb_conv_err.log
+        touch /var/log/bbb_conv_err.log
+        rm /var/log/bbb_conv_ok.log
+        touch /var/log/bbb_conv_ok.log
+        rm /var/log/bbb_conv.log.bk
+        cp /var/log/bbb_conv.log /var/log/bbb_conv.log.bk
     fi
 
 }

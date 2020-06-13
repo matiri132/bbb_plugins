@@ -13,6 +13,8 @@ PROC_max=8
 #"Day" will be from M_HOUR to N_HOUR.
 N_HOUR=24
 M_HOUR=6
+#Days to delete logs
+LOG_D=7
 #Path of bbb-recorder installation
 APPDIR="/root/bbb-recorder"
 
@@ -38,6 +40,7 @@ case $1 in
         sed -i "s|REC_PATH|"${APPDIR}"|g" ${WD}/bbb_converter.sh
         sed -i "s|TP_h|"${N_HOUR}"|g" ${WD}/bbb_converter.sh
         sed -i "s|BT_h|"${M_HOUR}"|g" ${WD}/bbb_converter.sh
+        sed -i "s|LOGDAYS|"${LOG_D}"|g" ${WD}/bbb_converter.sh
 
         cp ${WD}/files/bbb_converter.service ${WD}/bbb_converter.service
         sed -i "s|APPDIR|"${APPDIR}"|g" ${WD}/bbb_converter.service
@@ -54,13 +57,14 @@ case $1 in
         chmod +x ${APPDIR}/bbb_converter.sh
         
         #patch google
-        
+
         #cp ${WD}/files/google-chrome.sh /opt/google/chrome/google-chrome
         #chmod +x /opt/google/chrome/google-chrome
 
         #logs
         cp ${WD}/files/bbb_conv.conf /etc/rsyslog.d/bbb_conv.conf
         touch /var/log/bbb_conv.log
+        touch /var/log/bbb_conv.log.bk
         touch /var/log/bbb_conv_err.log
         touch /var/log/bbb_conv_ok.log
         chown syslog:adm /var/log/bbb_conv.log
@@ -79,5 +83,7 @@ case $1 in
         systemctl disable bbb_converter.service
         rm ${APPDIR}/bbb_converter.sh
         rm /var/log/bbb_conv.log
+        rm /var/log/bbb_conv_err.log
+        rm /var/log/bbb_conv_ok.log
     ;;
 esac

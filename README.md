@@ -28,6 +28,7 @@ PROC_min= Quantity of paralel conversions during the day ( M_HOUR - N_HOUR)
 PROC_max= Quantity of paralel conversions during the day ( N_HOUR - M_HOUR)
 N_HOUR=Top hour
 M_HOUR=Min hour
+LOG_D=Quantity of days to restore logs
 APPDIR= Path of bbb-recorder installation
 ```
 4. Install (with SUDO or root user without sudo):
@@ -59,5 +60,7 @@ LOGS:
 $cat /var/log/bbb_conv.log   --> FULL LOG
 $cat /var/log/bbb_conv_ok.log --> NO ERROR CONVERTIONS LOG
 $cat /var/log/bbb_conv.log --> ERROR LOG
+
+After LOG_DAYS passed all logs are restored, but you keep the older LOG_DAYS days logs on /var/lob/bbb_conv.log.bk
 ```
 
