@@ -44,5 +44,10 @@ systemctl disable bbb_converter.service
 
 To full uninstall:
 ./install.sh uninstall
+
+LOGS:
+$/var/log/bbb_log.log   --> FULL LOG
+$/var/log/bbb_log_ok.log --> NO ERROR CONVERTIONS LOG
+$/var/log/bbb_err.log --> ERROR LOG
 ```
 

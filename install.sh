@@ -16,6 +16,11 @@ M_HOUR=6
 #Path of bbb-recorder installation
 APPDIR="/root/bbb-recorder"
 
+##
+# LOGS in: 
+#   /var/log/bbb_log.log   --> FULL LOG
+#   /var/log/bbb_log_ok.log --> NO ERROR CONVERTIONS LOG
+#   /var/log/bbb_err.log --> ERROR LOG
 ###########################################################################
 
 WD=$(pwd)
