@@ -11,6 +11,7 @@ git clone https://github.com/matiri132/bbb_converter
 ```
 2. Give execution permissions:
 ```
+cd bbb_converter
 sudo chmod +x install.sh
 ```
 3. Configuration:
@@ -36,6 +37,9 @@ sudo ./install.sh install
 
 5. Control:
 ```
+To see the status
+systemctl status bbb_converter.service
+
 To stop conversions just stop the service:
 systemctl stop bbb_converter.service
 
@@ -52,8 +56,8 @@ To full uninstall:
 ./install.sh uninstall
 
 LOGS:
-$/var/log/bbb_log.log   --> FULL LOG
-$/var/log/bbb_log_ok.log --> NO ERROR CONVERTIONS LOG
-$/var/log/bbb_err.log --> ERROR LOG
+$cat /var/log/bbb_conv.log   --> FULL LOG
+$cat /var/log/bbb_conv_ok.log --> NO ERROR CONVERTIONS LOG
+$cat /var/log/bbb_conv.log --> ERROR LOG
 ```
 
