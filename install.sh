@@ -86,5 +86,6 @@ case $1 in
         rm /var/log/bbb_conv.log
         rm /var/log/bbb_conv_err.log
         rm /var/log/bbb_conv_ok.log
+        rm /var/log/bbb_conv_in_p.log
     ;;
 esac
