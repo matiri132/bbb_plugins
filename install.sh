@@ -67,6 +67,7 @@ case $1 in
         touch /var/log/bbb_conv.log.bk
         touch /var/log/bbb_conv_err.log
         touch /var/log/bbb_conv_ok.log
+        touch /var/log/bbb_conv_in_p.log
         chown syslog:adm /var/log/bbb_conv.log
         systemctl restart syslog
 

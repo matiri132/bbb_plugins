@@ -1,4 +1,4 @@
-
+#Parameters to be overwritted for sed
 PATH_SRC="PATHS"
 PATH_DST="PATHD"
 HOSTNAME="HNAM"
@@ -10,7 +10,7 @@ BOT_HOUR=BT_h
 LOGFILE=""
 LOG_RM=LOGDAYS
 
-#4 procesos por defecto
+
 PROC_n=0
 INDEX=0
 declare -a FILE_IN_PROC 
@@ -21,6 +21,7 @@ LOG_TIME=$(/bin/date +%s)
 
 shopt -s nullglob
 
+#4 Setting quantity of simultaneous proccessing on day and nigth
 set_nproc(){
     DATE=$(/bin/date +%H)
     if [ "${DATE}" -lt "${TOP_HOUR}" ] && [ "${DATE}" -gt "${BOT_HOUR}" ]
@@ -30,7 +31,7 @@ set_nproc(){
         PROC_n="${PROC_max}"
     fi    
 }
-
+#Error and full conversions log.
 refresh_log(){
     ACT_HOUR=$(/bin/date +%s)
     t_elap=$(( ${ACT_HOUR} - ${LAST_HOUR}))
@@ -66,16 +67,22 @@ init_arrays(){
 #Determinates the next file to convert.
 next_file(){
     local IN_PROC
-    for donefile in /var/bigbluebutton/recording/status/published/*-presentation.done ; do
+    #for donefile in /var/bigbluebutton/recording/status/published/*-presentation.done ; do
+    for donefile in $(ls -tr /var/bigbluebutton/recording/status/published/*-presentation.done);
         IN_PROC=false
+        DELETED=false
         MEETING_ID=$(/usr/bin/basename "${donefile}" | /usr/bin/cut -f 1,2 -d '-')
         for fileinproc in "${FILE_IN_PROC[@]}" ; do
+            if [ -f "/var/bigbluebutton/deleted/presentation/${donefile}" ]
+            then 
+                DELETED=true
+            fi
             if [ "${fileinproc}" = "${MEETING_ID}" ]
             then
                 IN_PROC=true
             fi
         done
-        if [ "${IN_PROC}" = false ]; then
+        if [ "${IN_PROC}" = false & "${DELETED}" = false ]; then
             if [ ! -f ${PATH_DST}/${MEETING_ID}.mp4 ]
             then   
                 echo ${MEETING_ID}  
@@ -94,6 +101,7 @@ init_arrays
 while true
 do    
     INDEX=0
+    echo "In Procces:" > /var/log/bbb_conv_in_p.log
     while [ "${INDEX}" -lt "${PROC_n}" ]
     do
         SLOT=0
@@ -122,6 +130,7 @@ do
                 PID_IN_PROC["${INDEX}"]=$!
                 FILE_IN_PROC["${INDEX}"]=${filen}
                 echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" 
+                echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" >> /var/log/bbb_conv_in_p.log
             fi            
         fi
         INDEX=$((${INDEX}+1))
