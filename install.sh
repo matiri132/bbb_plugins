@@ -20,9 +20,10 @@ APPDIR="/root/bbb-recorder"
 
 ##
 # LOGS in: 
-#   /var/log/bbb_log.log   --> FULL LOG
-#   /var/log/bbb_log_ok.log --> NO ERROR CONVERTIONS LOG
-#   /var/log/bbb_err.log --> ERROR LOG
+#   /var/log/bbb_conv.log   --> FULL LOG
+#   /var/log/bbb_conf_ok.log --> NO ERROR CONVERTIONS LOG
+#   /var/log/bbb_conv_err.log --> ERROR LOG
+#   /var/log/bbb_conv_in_p.log --> ACTUAL PROCCESSING
 ###########################################################################
 
 WD=$(pwd)

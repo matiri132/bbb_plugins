@@ -52,6 +52,12 @@ refresh_log(){
         rm /var/log/bbb_conv.log.bk
         cp /var/log/bbb_conv.log /var/log/bbb_conv.log.bk
     fi
+    IN=0
+    echo "Processing: " > /var/log/bbb_conv_in_p.log
+    for fileinproc in ${FILE_IN_PROC[@]}; do
+        echo "${IN} - ${fileinproc}" >> /var/log/bbb_conv_in_p.log
+        IN=$((${IN}+1))
+    done
 
 }
 
@@ -101,7 +107,6 @@ init_arrays
 while true
 do    
     INDEX=0
-    echo "In Procces:" > /var/log/bbb_conv_in_p.log
     while [ "${INDEX}" -lt "${PROC_n}" ]
     do
         SLOT=0
@@ -130,11 +135,12 @@ do
                 PID_IN_PROC["${INDEX}"]=$!
                 FILE_IN_PROC["${INDEX}"]=${filen}
                 echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" 
-                echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" >> /var/log/bbb_conv_in_p.log
+                
             fi            
         fi
         INDEX=$((${INDEX}+1))
     done
+
     refresh_log 
     sleep 5
 done
