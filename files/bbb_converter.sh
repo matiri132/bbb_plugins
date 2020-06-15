@@ -73,24 +73,23 @@ init_arrays(){
 #Determinates the next file to convert.
 next_file(){
     local IN_PROC
+    local DELETED
     #for donefile in /var/bigbluebutton/recording/status/published/*-presentation.done ; do
-    for donefile in $(ls -tr /var/bigbluebutton/recording/status/published/*-presentation.done);
+    for donefile in $(ls -tr /var/bigbluebutton/recording/status/published/*-presentation.done); do
         IN_PROC=false
         DELETED=false
         MEETING_ID=$(/usr/bin/basename "${donefile}" | /usr/bin/cut -f 1,2 -d '-')
+        if [ -f "/var/bigbluebutton/deleted/presentation/${MEETING_ID}" ]
+        then 
+            DELETED=true
+        fi
         for fileinproc in "${FILE_IN_PROC[@]}" ; do
-            if [ -f "/var/bigbluebutton/deleted/presentation/${donefile}" ]
-            then 
-                DELETED=true
-            fi
-            if [ "${fileinproc}" = "${MEETING_ID}" ]
-            then
+            if [ "${fileinproc}" = "${MEETING_ID}" ]; then
                 IN_PROC=true
             fi
         done
-        if [ "${IN_PROC}" = false & "${DELETED}" = false ]; then
-            if [ ! -f ${PATH_DST}/${MEETING_ID}.mp4 ]
-            then   
+        if [ "${IN_PROC}" = false ] && [ "${DELETED}" = false ]; then
+            if [ ! -f ${PATH_DST}/${MEETING_ID}.mp4 ]; then   
                 echo ${MEETING_ID}  
                 return 
             fi
