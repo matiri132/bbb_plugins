@@ -79,7 +79,7 @@ next_file(){
         IN_PROC=false
         DELETED=false
         MEETING_ID=$(/usr/bin/basename "${donefile}" | /usr/bin/cut -f 1,2 -d '-')
-        if [ -f "/var/bigbluebutton/deleted/presentation/${MEETING_ID}" ]
+        if [ -d "/var/bigbluebutton/deleted/presentation/${MEETING_ID}" ]
         then 
             DELETED=true
         fi
@@ -130,11 +130,15 @@ do
             filen=$(next_file)
             if [ ! "${filen}" = "NULL" ]
             then
-                node ${APPDIR}/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true &
-                PID_IN_PROC["${INDEX}"]=$!
-                FILE_IN_PROC["${INDEX}"]=${filen}
-                echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" 
-                
+                node ${APPDIR}/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true > output 2>&1 &
+                sleep 2
+                line=$(head -n 1 output)
+                if [ ! "${line}" = 'Recording not found!' ]; then
+                    PID_IN_PROC["${INDEX}"]=$!
+                    FILE_IN_PROC["${INDEX}"]=${filen}
+                    echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}"                     
+                fi
+                rm output        
             fi            
         fi
         INDEX=$((${INDEX}+1))
