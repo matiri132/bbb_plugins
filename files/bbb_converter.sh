@@ -52,13 +52,15 @@ refresh_log(){
         rm /var/log/bbb_conv.log.bk
         cp /var/log/bbb_conv.log /var/log/bbb_conv.log.bk
     fi
-    IN=0
+    IN=0 
+    echo "Conversions since restart: ${CONVERSIONS}" > /var/log/bbb_conv_in_p.log
     echo "Processing: " > /var/log/bbb_conv_in_p.log
-    for fileinproc in ${FILE_IN_PROC[@]}; do
-        echo "${IN} - ${fileinproc}" >> /var/log/bbb_conv_in_p.log
+    while [ "${IN}" -lt "${PROC_n}" ]
+    do
+        echo "${IN} - ${FILE_IN_PROC[${IN}]} - ${PID_IN_PROC[${IN}]}" >> /var/log/bbb_conv_in_p.log
         IN=$((${IN}+1))
     done
-
+    
 }
 
 init_arrays(){
@@ -79,6 +81,10 @@ next_file(){
         IN_PROC=false
         DELETED=false
         MEETING_ID=$(/usr/bin/basename "${donefile}" | /usr/bin/cut -f 1,2 -d '-')
+        if [ -d "/var/bigbluebutton/unpublished/presentation/${MEETING_ID}" ]
+        then 
+            DELETED=true
+        fi
         if [ -d "/var/bigbluebutton/deleted/presentation/${MEETING_ID}" ]
         then 
             DELETED=true
@@ -102,9 +108,11 @@ next_file(){
 ######################
 set_nproc
 init_arrays
+CONVERSIONS=0
 
 while true
 do    
+    set_nproc
     INDEX=0
     while [ "${INDEX}" -lt "${PROC_n}" ]
     do
@@ -116,7 +124,9 @@ do
             if [ ! "${proc_status}" = "" ]
             then    
                 SLOT=0
-            else 
+            else
+                CONVERSIONS=$((${CONVERSIONS}+1))
+                kill -9 ${pid}
                 FILE_IN_PROC[${INDEX}]="NULL"  
                 SLOT=1
             fi
@@ -124,26 +134,42 @@ do
             FILE_IN_PROC[${INDEX}]="NULL"
             SLOT=1
         fi
-        #If there are a procces waiting check is still running.
+        #If there are a procces waiting check if is still running.
         if [ ${SLOT} -eq 1 ]
         then
             filen=$(next_file)
             if [ ! "${filen}" = "NULL" ]
             then
-                node ${APPDIR}/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true > output 2>&1 &
-                sleep 2
-                line=$(head -n 1 output)
-                if [ ! "${line}" = 'Recording not found!' ]; then
-                    PID_IN_PROC["${INDEX}"]=$!
-                    FILE_IN_PROC["${INDEX}"]=${filen}
-                    echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}"                     
-                fi
-                rm output        
+                node ${APPDIR}/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true &
+                PID_IN_PROC["${INDEX}"]=$!
+                FILE_IN_PROC["${INDEX}"]=${filen}
+                echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" 
+                
             fi            
         fi
         INDEX=$((${INDEX}+1))
     done
-
+    
     refresh_log 
-    sleep 5
+    if [ ${CONVERSIONS} -gt $((${PROC_n}*4-1)) ]
+    then
+        while [ "${CLEAR}" -lt ${PROC_n} ]
+        do
+            INDEX=0
+            CLEAR=0    
+            while [ "${INDEX}" -lt "${PROC_n}" ]
+            do
+                pid="${PID_IN_PROC[${INDEX}]}"
+                proc_status=$(/bin/ps p "${pid}" | /bin/grep "${pid}" )
+                if [ "${proc_status}" = "" ]; then
+                    CLEAR=$((${CLEAR}+1))
+                fi
+                INDEX=$((${INDEX}+1))
+            done
+            sleep 5
+        done
+        exit 0
+    fi
+    sleep 180
+    
 done
