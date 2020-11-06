@@ -1,0 +1,68 @@
+########SCALELITE#################
+IPv4 Address:	116.202.55.111
+IPv6 Address:	2a01:4f8:10b:4390::2
+Username:	root
+Password:	hqw8HseyxkTa5W
+######## BBB1 #############
+hostname: bbb1.vidalsystem.com
+IP: 51.161.104.197
+User: root
+Password: PBPARH$Z$#O1
+########## BBB2 ################
+IP: 51.161.104.198
+User: root
+Password: DZ4GgqFTOA9g!v
+
+Drive API:
+
+Habilitar API: https://console.developers.google.com/
+
+Cuenta de servicio: 
+TUTO: https://www.daimto.com/google-drive-api-with-a-service-account/
+DOC: https://developers.google.com/identity/protocols/oauth2/service-account#python
+
+Crear credencial:
+
+OAUTH:
+    -https://developers.google.com/identity/protocols/oauth2
+    -https://tools.ietf.org/html/rfc6749
+    
+1: https://console.developers.google.com/iam-admin/serviceaccounts
+2-If prompted, select a project, or create a new one.
+3-Click add Create service account.
+4-Under Service account details, type a name, ID, and description for the service account, then click Create.
+5-Optional: Under Service account permissions, select the IAM roles to grant to the service account, then click Continue.
+6-Optional: Under Grant users access to this service account, add the users or groups that are allowed to use and manage the service account.
+7-Click add Create key, then click Create.
+
+OAUTH python:
+-https://github.com/googleapis/google-api-python-client/blob/master/docs/oauth.md
+-https://github.com/googleapis/google-api-python-client/blob/master/docs/oauth-server.md#examples
+
+DEPS:
+
+pip install google-auth google-auth-oauthlib
+pip install oauth2client
+
+DRIVE APIPYTHON:
+-https://googleapis.github.io/google-api-python-client/docs/dyn/drive_v3.html
+https://googleapis.github.io/google-api-python-client/docs/dyn/drive_v3.files.html#get_media FILES
+https://github.com/googleworkspace/python-samples/blob/master/drive/driveapp/main.py
+https://developers.google.com/drive/api/v3/manage-downloads#python DESCARGAR ARCHIVOS
+
+https://programtalk.com/python-examples/googleapiclient.http.MediaIoBaseDownload/ DOWNLOAD
+
+https://www.programcreek.com/python/example/1734/io.BytesIO  DOCS PYTHON
+
+GOOGLE API PYTHON:
+https://developers.google.com/identity/protocols/oauth2/scopes#drive  - SCOPES
+https://github.com/googleapis/google-api-python-client/tree/master/docs
+https://googleapis.github.io/google-api-python-client/docs/epy/googleapiclient.discovery-module.html -discovery
+
+BUGS:
+
+https://github.com/googleapis/google-api-python-client/issues/709 
+--> Uncommenting the line precedence ::ffff:0:0/96 100 in /etc/gai.conf fixed the problem.
+
+CUENTA DE SERVICIO:
+https://console.cloud.google.com/iam-admin/serviceaccounts/details/107068897078311382918?authuser=3&folder=&organizationId=&project=bbb-drive&supportedpurview=project

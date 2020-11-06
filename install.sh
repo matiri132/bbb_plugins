@@ -4,7 +4,7 @@
 #
 #CONFIGURATION: See "README.md"
 #
-PATH_SRC="/var/bigbluebutton/recording/status/published/*-presentation.done"
+PATH_BASE="/mnt/scalelite-recordings/var/bigbluebutton" 
 PATH_DST="/var/www/bigbluebutton-default/record"
 HOSTNAME="bbbd.vidalsystem.com"
 #Quantity of procces -> min: at day -> max:at nigth
@@ -32,7 +32,7 @@ WD=$(pwd)
 case $1 in
     install)
         cp ${WD}/files/bbb_converter.sh ${WD}/bbb_converter.sh
-        sed -i "s|PATHS|"${PATH_SRC}"|g" ${WD}/bbb_converter.sh
+        sed -i "s|PATHBASE|"${PATH_BASE}"|g" ${WD}/bbb_converter.sh
         sed -i "s|PATHD|"${PATH_DST}"|g" ${WD}/bbb_converter.sh
         sed -i "s|HNAM|"${HOSTNAME}"|g" ${WD}/bbb_converter.sh
         sed -i "s|PR_m|"${PROC_min}"|g" ${WD}/bbb_converter.sh
@@ -79,6 +79,9 @@ case $1 in
         rm ${WD}/bbb_converter.service ${WD}/bbb_converter.sh
 
     ;;
+
+    driveinstall)
+        pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
     
     uninstall)
         systemctl stop bbb_converter.service

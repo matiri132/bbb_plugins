@@ -1,5 +1,5 @@
 #Parameters to be overwritted for sed
-PATH_SRC="PATHS"
+PATH_BASE="PATHBASE"
 PATH_DST="PATHD"
 HOSTNAME="HNAM"
 PROC_min=PR_m
@@ -76,16 +76,15 @@ init_arrays(){
 next_file(){
     local IN_PROC
     local DELETED
-    #for donefile in /var/bigbluebutton/recording/status/published/*-presentation.done ; do
-    for donefile in $(ls -tr /var/bigbluebutton/recording/status/published/*-presentation.done); do
+    for donefile in $(ls -tr "${PATH_BASE}/published/*-presentation.done"); do
         IN_PROC=false
         DELETED=false
         MEETING_ID=$(/usr/bin/basename "${donefile}" | /usr/bin/cut -f 1,2 -d '-')
-        if [ -d "/var/bigbluebutton/unpublished/presentation/${MEETING_ID}" ]
+        if [ -d "${PATH_BASE}/unpublished/presentation/${MEETING_ID}" ]
         then 
             DELETED=true
         fi
-        if [ -d "/var/bigbluebutton/deleted/presentation/${MEETING_ID}" ]
+        if [ -d "${PATH_BASE}/deleted/presentation${MEETING_ID}" ]
         then 
             DELETED=true
         fi
