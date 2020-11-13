@@ -76,7 +76,7 @@ init_arrays(){
 next_file(){
     local IN_PROC
     local DELETED
-    for donefile in $(ls -tr "${PATH_BASE}/published/*-presentation.done"); do
+    for donefile in $(ls -tr "${PATH_BASE}/published/presentation/"); do
         IN_PROC=false
         DELETED=false
         MEETING_ID=$(/usr/bin/basename "${donefile}" | /usr/bin/cut -f 1,2 -d '-')
@@ -84,10 +84,10 @@ next_file(){
         then 
             DELETED=true
         fi
-        if [ -d "${PATH_BASE}/deleted/presentation${MEETING_ID}" ]
-        then 
-            DELETED=true
-        fi
+        #if [ -d "${PATH_BASE}/deleted/presentation${MEETING_ID}" ]
+        #then 
+        #    DELETED=true
+        #fi
         for fileinproc in "${FILE_IN_PROC[@]}" ; do
             if [ "${fileinproc}" = "${MEETING_ID}" ]; then
                 IN_PROC=true

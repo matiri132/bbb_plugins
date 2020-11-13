@@ -5,7 +5,7 @@
 #CONFIGURATION: See "README.md"
 #
 PATH_BASE="/mnt/scalelite-recordings/var/bigbluebutton" 
-PATH_DST="/var/www/bigbluebutton-default/record"
+PATH_DST="/mnt/scalelite-recordings/var/bigbluebutton/converted"
 HOSTNAME="bbbd.vidalsystem.com"
 #Quantity of procces -> min: at day -> max:at nigth
 PROC_min=4 
