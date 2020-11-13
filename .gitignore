@@ -1,1 +1,5 @@
 other/
+bbb-drive/*txt
+bbb-drive/metadata.xml
+bbb-drive/drive-get.py
+bbb-drive/__pycache__
