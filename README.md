@@ -4,6 +4,7 @@
 ### bbb_drive     : Auto google drive uploader for recordings
 
 #### bbb_converter depends of https://github.com/jibon57/bbb-recorder and all dependencies
+#### bbb_drive depends of pip : https://pip.pypa.io/en/stable/installing/
 ### Both contains a script to auto-install and auto-config
 ##### Auto install a Service what install a SystemD service to handle the conversions
 
