@@ -26,13 +26,13 @@ def main():
 # Path to the file to upload passed as argument.
   FILENAME = str(sys.argv[1])
   if not os.path.exists(FILENAME):
-    print('ERROR: Especified file does not exist.')    
+    print("ERROR: Especified file does not exist. ->" + str(FILENAME))    
     return -1
 
   # Metadata about the file
   MIMETYPE = drivef.get_mimeType(FILENAME)
   if(MIMETYPE == -1):
-    print('ERROR: Unkwown file format. ')
+    print("ERROR: Unkwown file format. ->" + str(FILENAME) + "  ->" + str(MIMETYPE)  )
     return -1
 
   #Create drive service based on service account credentials
