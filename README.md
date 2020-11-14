@@ -3,8 +3,8 @@
 ### bbb_converter : Convert bbb presentations to mp4
 ### bbb_drive     : Auto google drive uploader for recordings
 
-## bbb_converter depends of https://github.com/jibon57/bbb-recorder and all dependencies
-## Both contains a script to auto-install and auto-config
+#### bbb_converter depends of https://github.com/jibon57/bbb-recorder and all dependencies
+### Both contains a script to auto-install and auto-config
 ##### Auto install a Service what install a SystemD service to handle the conversions
 
 **bbb_converter: Full install:**
