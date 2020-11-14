@@ -3,8 +3,9 @@
 ### bbb_converter : Convert bbb presentations to mp4
 ### bbb_drive     : Auto google drive uploader for recordings
 
-## bbb_converter depends of https://github.com/jibon57/bbb-recorder and all dependencies
-## Both contains a script to auto-install and auto-config
+#### bbb_converter depends of https://github.com/jibon57/bbb-recorder and all dependencies
+#### bbb_drive depends of pip : https://pip.pypa.io/en/stable/installing/
+### Both contains a script to auto-install and auto-config
 ##### Auto install a Service what install a SystemD service to handle the conversions
 
 **bbb_converter: Full install:**
@@ -14,7 +15,7 @@ git clone https://github.com/matiri132/bbb_converter
 ```
 2. Give execution permissions:
 ```
-cd bbb_converter/bbb_converter
+cd bbb_plugins/bbb_converter
 sudo chmod +x install.sh
 ```
 3. Configuration:
@@ -70,7 +71,7 @@ After LOG_DAYS passed all logs are restored, but you keep the older LOG_DAYS day
 **bbb-drive: Full install:**
 1. Give execution permissions:
 ```
-cd bbb_converter/bbb_drive
+cd bbb_plugins/bbb_drive
 sudo chmod +x install.sh
 ```
 3. Configuration:
