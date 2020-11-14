@@ -5,6 +5,7 @@
 #CONFIGURATION: See "README.md"
 #
 PATH_CONV="/mnt/scalelite-recordings/var/bigbluebutton/converted"
+PATH_PRES="/mnt/scalelite-recordings/var/bigbluebutton/published/presentation"
 #Days to delete logs
 LOG_D=7
 #Path of bbb-recorder installation
@@ -23,11 +24,12 @@ WD=$(pwd)
 case $1 in
     install)
         apt install python3
-        pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib httplib2
-
+        apt install python3-pip
+        pip3 install --upgrade google-api-python-client google-auth-httplib2 google google-oauth google-auth-oauthlib httplib2
 
         cp ${WD}/files/bbb_drive.sh ${WD}/bbb_drive.sh
         sed -i "s|PATHCONV|"${PATH_CONV}"|g" ${WD}/bbb_drive.sh
+        sed -i "s|PATHPRES|"${PATH_PRES}"|g" ${WD}/bbb_drive.sh
         sed -i "s|LOGDAYS|"${LOG_D}"|g" ${WD}/bbb_drive.sh
 
         cp ${WD}/files/bbb_drive.service ${WD}/bbb_drive.service
