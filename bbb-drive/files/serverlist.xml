@@ -2,5 +2,6 @@
     <servers>
         <!--    Servername from bbb metadata - Folder name from google drive -->
         <server name="www.virtualfieecs.pe">bbb-FIEECS</server>
+        <server name="www.fauavirtual.com">bbb-FAUA</server>
     </servers>
 </data>
