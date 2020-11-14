@@ -1,0 +1,19 @@
+[Unit]
+Description=Google Drive Auto-Upload
+After=bbb-web.service 
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=APPDIR
+ExecStart=/bin/bash APPDIR/bbb_drive.sh
+Environment=NODE_ENV=production
+Restart=always
+RestartSec=5s
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=bbb_drive
+
+
+[Install]
+WantedBy=multi-user.target

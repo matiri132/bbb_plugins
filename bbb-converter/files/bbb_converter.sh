@@ -7,7 +7,6 @@ PROC_max=PR_M
 APPDIR="REC_PATH"
 TOP_HOUR=TP_h
 BOT_HOUR=BT_h
-LOGFILE=""
 LOG_RM=LOGDAYS
 
 
@@ -140,6 +139,7 @@ do
             if [ ! "${filen}" = "NULL" ]
             then
                 node ${APPDIR}/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true &
+                cp "${PATH_BASE}/published/presentation/${filen}/metadata.xml" "${PATH_BASE}/converted/${filen}.xml"
                 PID_IN_PROC["${INDEX}"]=$!
                 FILE_IN_PROC["${INDEX}"]=${filen}
                 echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" 

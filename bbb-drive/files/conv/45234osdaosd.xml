@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<recording>
+  <id>fffb10ad78f04cd44e5fd6708488b6a7b0fbaf24-1597438612636</id>
+  <state>published</state>
+  <published>true</published>
+  <start_time>1597438612636</start_time>
+  <end_time>1597449012030</end_time>
+  <participants>54</participants>
+  <meeting id="fffb10ad78f04cd44e5fd6708488b6a7b0fbaf24-1597438612636" externalId="adeaae628d5b82af0eb9a7fa703355c9de903a86-139-3638" name="Modelamiento de sistemas" breakout="false"/>
+  <meta>
+    <bbb-context>ECC63L Sistemas de Informacion</bbb-context>
+    <bbb-origin>Moodle</bbb-origin>
+    <bbb-origin-server-common-name/>
+    <bbb-origin-server-name>www.virtualfieecs.pe</bbb-origin-server-name>
+    <bbb-origin-tag>moodle-mod_bigbluebuttonbn (2019042008)</bbb-origin-tag>
+    <bbb-origin-version>3.8.2+ (Build: 20200428)</bbb-origin-version>
+    <bbb-recording-description>Modelo Funcional</bbb-recording-description>
+    <bbb-recording-name>Modelamiento de sistemas</bbb-recording-name>
+    <bbb-recording-tags/>
+    <isBreakout>false</isBreakout>
+    <meetingId>adeaae628d5b82af0eb9a7fa703355c9de903a86-139-3638</meetingId>
+    <meetingName>Modelamiento de sistemas</meetingName>
+  </meta>
+  <playback>
+    <format>presentation</format>
+    <link>https://bbb.virtualfieecs.pe/playback/presentation/2.0/playback.html?meetingId=fffb10ad78f04cd44e5fd6708488b6a7b0fbaf24-1597438612636</link>
+    <processing_time>3290626</processing_time>
+    <duration>6540739</duration>
+    <extensions>
+      <preview>
+        <images>
+          <image width="176" height="136" alt="Welcome To BigBlueButton">https://bbb.virtualfieecs.pe/presentation/fffb10ad78f04cd44e5fd6708488b6a7b0fbaf24-1597438612636/presentation/d2d9a672040fbde2a47a10bf6c37b6a4b5ae187f-1597438612656/thumbnails/thumb-1.png</image>
+          <image width="176" height="136" alt="This slide left blank for whiteboard">https://bbb.virtualfieecs.pe/presentation/fffb10ad78f04cd44e5fd6708488b6a7b0fbaf24-1597438612636/presentation/d2d9a672040fbde2a47a10bf6c37b6a4b5ae187f-1597438612656/thumbnails/thumb-2.png</image>
+          <image width="176" height="136" alt="This slide left blank for whiteboard">https://bbb.virtualfieecs.pe/presentation/fffb10ad78f04cd44e5fd6708488b6a7b0fbaf24-1597438612636/presentation/d2d9a672040fbde2a47a10bf6c37b6a4b5ae187f-1597438612656/thumbnails/thumb-3.png</image>
+        </images>
+      </preview>
+    </extensions>
+    <size>134515568</size>
+  </playback>
+  <raw_size>148357152</raw_size>
+</recording>

@@ -6,7 +6,7 @@
 #
 PATH_BASE="/mnt/scalelite-recordings/var/bigbluebutton" 
 PATH_DST="/mnt/scalelite-recordings/var/bigbluebutton/converted"
-HOSTNAME="bbbd.vidalsystem.com"
+HOSTNAME="bbb.vidalsystem.com"
 #Quantity of procces -> min: at day -> max:at nigth
 PROC_min=4 
 PROC_max=8
@@ -80,9 +80,6 @@ case $1 in
 
     ;;
 
-    driveinstall)
-        pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
-    
     uninstall)
         systemctl stop bbb_converter.service
         systemctl disable bbb_converter.service

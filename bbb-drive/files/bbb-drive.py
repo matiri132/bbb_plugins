@@ -15,12 +15,12 @@ def main():
   # Path to the Service account cred file
   SERVICE_ACCOUNT_FILE = 'service.json'
   if not os.path.exists(SERVICE_ACCOUNT_FILE):
-    print("No credentials file found. Get credentials and save in the directory as service.json")    
+    print("ERROR: No credentials file found. Get credentials and save in the directory as service.json")    
     return -1
 
   #Verify args
   if(len(sys.argv) < 3):
-    print('ERROR: No file especified. Syntaxis: bbb-drive filename folderName')
+    print('ERROR: No file especified. Syntaxis: bbb-drive filename metadatafile')
     return -1
 
 # Path to the file to upload passed as argument.
@@ -32,7 +32,7 @@ def main():
   # Metadata about the file
   MIMETYPE = drivef.get_mimeType(FILENAME)
   if(MIMETYPE == -1):
-    print('Unkwown file format. Use \'mp4\' for videos or \'txt\' for text files.')
+    print('ERROR: Unkwown file format. ')
     return -1
 
   #Create drive service based on service account credentials
@@ -45,23 +45,22 @@ def main():
   FOLDER_SV_ID = drivef.get_folderId(drive_service, 
               drivef.get_folderName(SERVERLIST, metadata['server-name']))
   if(FOLDER_SV_ID == -1):
-    print("Folder associated to server isn't exist, verify serverlist.xml")
+    print("ERROR: older associated to server isn't exist, verify serverlist.xml")
     return -1
   #Verify sub folder existence
   if not (drivef.verify_folder( drive_service, FOLDER_SV_ID , metadata['context'])):
-    print("Failed to create folder on drive...")
+    print("ERROR: Failed to create folder on drive.")
     return -1
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
 
   #Verify file existence
   TITLE = str(metadata['name']) + ":" + str(metadata['id'])
   if( drivef.verify_file(drive_service, TITLE , MIMETYPE, PARENT_ID)):
-    print("File already uploaded...")
+    print("ERROR: File already uploaded...")
     return 1
 
   DESCRIPTION = metadata['description']
 
-  print("Settingup the request...")
   # Insert a file. Files are comprised of contents and metadata.
   # MediaFileUpload abstracts uploading file contents from a file on disk.
   media_body = googleapiclient.http.MediaFileUpload(
@@ -75,7 +74,6 @@ def main():
     'description': DESCRIPTION,
     'parents' : [PARENT_ID]
   }
-  print("Uploading file...")
   # Perform the request and print the result.
   new_file = drive_service.files().create(body=body, media_body=media_body).execute()
   pprint.pprint(new_file)
