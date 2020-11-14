@@ -1,6 +1,6 @@
 #Parameters to be overwritted for sed
 PATH_CONV="PATHCONV"
-#PATH_CONV="/home/mxchxdx/freelancer/bbb_conversion/bbb-drive/files/conv"
+PATH_PRES="PATHPRES"
 LOG_RM=LOGDAYS
 ACT_HOUR=$(/bin/date +%s)
 LAST_HOUR=$(/bin/date +%s)
@@ -10,16 +10,20 @@ shopt -s nullglob
 
 #Determinates the next file to upload.
 next_file(){
+    if [ -z "$(ls -A ${PATH_CONV})" ]
+    then
+        echo "NULL"
+    fi
 
     for videofile in $(ls -tr "${PATH_CONV}"); do
         EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
         if [ ! ${EXT} = "xml" ]
         then
             MEETING_ID=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 1 -d '.')
-            META_FILE=$(echo "${PATH_CONV}/${MEETING_ID}.xml" )
+            META_FILE=$(echo "${PATH_PRES}/${MEETING_ID}/metadata.xml" )
             FILENAME=$(echo "${PATH_CONV}/${MEETING_ID}.${EXT}")
             EXISTS=$(python3 drive-get.py fileExist ${FILENAME} ${META_FILE})
-            if [ ${EXISTS} = "true" ]
+            if [ "${EXISTS}" = "true" ]
             then
                 echo "NULL"
             else
@@ -60,17 +64,17 @@ while true
 do
     FILE_TO_UPLOAD=$(next_file)
     
-    if [ ! ${FILE_TO_UPLOAD} = "NULL" ]
+    if [ "${FILE_TO_UPLOAD}" != "NULL" ]
     then
         FILENAME=$(/usr/bin/basename "${FILE_TO_UPLOAD}" | /usr/bin/cut -f 1 -d '.')
         EXT=$(/usr/bin/basename "${FILE_TO_UPLOAD}" | /usr/bin/cut -f 2 -d '.')
-        META_FILE=$(echo "${PATH_CONV}/${FILENAME}.xml" )
+        META_FILE=$(echo "${PATH_PRES}/${MEETING_ID}/metadata.xml" )
         FILENAME=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
         UPLOAD=$(python3 bbb-drive.py ${FILENAME} ${META_FILE})
         echo "UPLOAD OK. INFO: ${UPLOAD}"
     else    
         echo "No files to upload"
-        sleep 10
+        sleep 30
     fi
 done
 
