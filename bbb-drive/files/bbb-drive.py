@@ -32,7 +32,7 @@ def main():
   # Metadata about the file
   MIMETYPE = drivef.get_mimeType(FILENAME)
   if(MIMETYPE == -1):
-    print("ERROR: Unkwown file format. ->" + str(FILENAME) + "  ->" + str(MIMETYPE))
+    print("ERROR: Unkwown file format. ->" + str(FILENAME) + "  ->" + str(MIMETYPE)  )
     return -1
 
   #Create drive service based on service account credentials
