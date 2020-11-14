@@ -14,7 +14,7 @@ git clone https://github.com/matiri132/bbb_converter
 ```
 2. Give execution permissions:
 ```
-cd bbb_converter/bbb_converter
+cd bbb_plugins/bbb_converter
 sudo chmod +x install.sh
 ```
 3. Configuration:
@@ -70,7 +70,7 @@ After LOG_DAYS passed all logs are restored, but you keep the older LOG_DAYS day
 **bbb-drive: Full install:**
 1. Give execution permissions:
 ```
-cd bbb_converter/bbb_drive
+cd bbb_plugins/bbb_drive
 sudo chmod +x install.sh
 ```
 3. Configuration:
