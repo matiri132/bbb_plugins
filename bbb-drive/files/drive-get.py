@@ -30,16 +30,16 @@ def main():
         else:
             print("false")   
 
-#    if(str(sys.argv[1]) == "delete"):
-#        results = drive_service.files().list(
-#                pageSize=10, fields="nextPageToken, files(id, name)").execute()
-#        items = results.get('files', [])
-#        if not items:
-#            print('No files found.')
-#        else:
-#            for item in items:
-#                if(item['id'] != "19ieJkEJ2jZ-Aao0n7A4f6zZQNNcj4XDA"):
-#                    drivef.delete_file(drive_service , item['id'])
+    if(str(sys.argv[1]) == "delete"):
+        results = drive_service.files().list(
+                pageSize=10, fields="nextPageToken, files(id, name)").execute()
+        items = results.get('files', [])
+        if not items:
+            print('No files found.')
+        else:
+            for item in items:
+                if(item['id'] != "19ieJkEJ2jZ-Aao0n7A4f6zZQNNcj4XDA"):
+                    drivef.delete_file(drive_service , item['id'])
 
     drive_service.close()
 

@@ -39,6 +39,8 @@ refresh_log(){
         LAST_HOUR="${ACT_HOUR}"
         cat /var/log/bbb_conv.log | grep -A 3 "Error" > /var/log/bbb_conv_err.log
         cat /var/log/bbb_conv.log | grep -A 1 "Convertion done to here:" > /var/log/bbb_conv_ok.log
+        rm /var/log/bbb_conv.log
+        touch /var/log/bbb_conv.log
     fi
     day_elap=$(((${ACT_HOUR} - ${LOG_TIME})/86400 ))
     if [  ${day_elap}  -gt $(( ${LOG_RM} - 1 ))  ]
@@ -83,10 +85,7 @@ next_file(){
         then 
             DELETED=true
         fi
-        #if [ -d "${PATH_BASE}/deleted/presentation${MEETING_ID}" ]
-        #then 
-        #    DELETED=true
-        #fi
+
         for fileinproc in "${FILE_IN_PROC[@]}" ; do
             if [ "${fileinproc}" = "${MEETING_ID}" ]; then
                 IN_PROC=true
@@ -139,7 +138,6 @@ do
             if [ ! "${filen}" = "NULL" ]
             then
                 node ${APPDIR}/export.js "https://${HOSTNAME}/playback/presentation/2.0/playback.html?meetingId=${filen}" ${filen} 0 true &
-                cp "${PATH_BASE}/published/presentation/${filen}/metadata.xml" "${PATH_BASE}/converted/${filen}.xml"
                 PID_IN_PROC["${INDEX}"]=$!
                 FILE_IN_PROC["${INDEX}"]=${filen}
                 echo "${INDEX} - ${FILE_IN_PROC[${INDEX}]} - ${PID_IN_PROC[${INDEX}]}" 

@@ -1,6 +1,7 @@
 #Parameters to be overwritted for sed
 PATH_CONV="PATHCONV"
 PATH_PRES="PATHPRES"
+
 LOG_RM=LOGDAYS
 ACT_HOUR=$(/bin/date +%s)
 LAST_HOUR=$(/bin/date +%s)
@@ -10,27 +11,26 @@ shopt -s nullglob
 
 #Determinates the next file to upload.
 next_file(){
+    local EXIST=""
     if [ -z "$(ls -A ${PATH_CONV})" ]
     then
         echo "NULL"
-    fi
-
-    for videofile in $(ls -tr "${PATH_CONV}"); do
-        EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
-        if [ ! ${EXT} = "xml" ]
-        then
+    else
+        for videofile in $(ls -tr "${PATH_CONV}")
+        do
             MEETING_ID=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 1 -d '.')
+            EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
             META_FILE=$(echo "${PATH_PRES}/${MEETING_ID}/metadata.xml" )
-            FILENAME=$(echo "${PATH_CONV}/${MEETING_ID}.${EXT}")
-            EXISTS=$(python3 drive-get.py fileExist ${FILENAME} ${META_FILE})
-            if [ "${EXISTS}" = "true" ]
+            EXIST=$(python3 drive-get.py fileExist ${MEETING_ID}.${EXT} ${META_FILE})
+
+            if [[ "${EXIST}" == "false" ]]
             then
-                echo "NULL"
-            else
                 echo "${MEETING_ID}.${EXT}"
+                return
             fi
-        fi
-    done
+        done
+        echo "NULL"
+    fi
     
 }
 
@@ -59,22 +59,26 @@ refresh_log(){
 ######################
 ### MAIN FUNCTION ####
 ######################
-
+FILE_TO_UPLOAD=""
 while true
 do
     FILE_TO_UPLOAD=$(next_file)
-    
+    EXT=""
+    FILENAME=""
+    META_FILE=""
+    FILENAME_PATH=""
+    UPLOAD=""
     if [ "${FILE_TO_UPLOAD}" != "NULL" ]
     then
         FILENAME=$(/usr/bin/basename "${FILE_TO_UPLOAD}" | /usr/bin/cut -f 1 -d '.')
         EXT=$(/usr/bin/basename "${FILE_TO_UPLOAD}" | /usr/bin/cut -f 2 -d '.')
-        META_FILE=$(echo "${PATH_PRES}/${MEETING_ID}/metadata.xml" )
-        FILENAME=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
-        UPLOAD=$(python3 bbb-drive.py ${FILENAME} ${META_FILE})
+        META_FILE=$(echo "${PATH_PRES}/${FILENAME}/metadata.xml" )
+        FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
+        UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
         echo "UPLOAD OK. INFO: ${UPLOAD}"
     else    
         echo "No files to upload"
-        sleep 30
     fi
+    sleep 10
 done
 
