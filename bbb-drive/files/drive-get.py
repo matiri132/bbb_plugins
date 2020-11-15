@@ -30,16 +30,42 @@ def main():
         else:
             print("false")   
 
-    if(str(sys.argv[1]) == "delete"):
-        results = drive_service.files().list(
-                pageSize=10, fields="nextPageToken, files(id, name)").execute()
-        items = results.get('files', [])
-        if not items:
-            print('No files found.')
-        else:
-            for item in items:
-                if(item['id'] != "19ieJkEJ2jZ-Aao0n7A4f6zZQNNcj4XDA"):
+    if(str(sys.argv[1]) == "delInFolder"):
+        FOLDER_ID=drivef.get_folderId(drive_service , str(sys.argv[2]))
+        query = "\'" + str(FOLDER_ID) + "\' in parents"
+        page_token = None
+        while True:      
+            results = drive_service.files().list( q = query,
+                    spaces='drive', fields="nextPageToken, files(id, name)").execute()
+            print(results)
+            items = results.get('files', [])
+            if not items:
+                print('No files found.')
+            else:
+                for item in items:
                     drivef.delete_file(drive_service , item['id'])
+            page_token = results.get('nextPageToken', None)
+            if page_token is None:
+                break
+    
+    if(str(sys.argv[1]) == "delByName"):
+        FILENAME=str(sys.argv[2])
+        query = "name='" + FILENAME + "'"
+        print(query)
+        page_token = None
+        while True:      
+            results = drive_service.files().list( q = query,
+                    spaces='drive', fields="nextPageToken, files(id, name)").execute()
+            items = results.get('files', [])
+            if not items:
+                print('No files found.')
+            else:
+                for item in items:
+                    drivef.delete_file(drive_service , item['id'])
+            page_token = results.get('nextPageToken', None)
+            if page_token is None:
+                break
+
 
     drive_service.close()
 

@@ -54,8 +54,10 @@ def main():
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
 
   #Verify file existence
-  TITLE = str(metadata['name']) + ":" + str(metadata['id'])
-  if( drivef.verify_file(drive_service, TITLE , MIMETYPE, PARENT_ID)):
+  name = str(metadata['name'])
+  name_t= (name[:200]) if len(name) > 200 else name
+  TITLE = name_t + "_" + str(metadata['id'])
+  if( drivef.verify_file(drive_service, name , MIMETYPE, PARENT_ID)):
     print("ERROR: File already uploaded...")
     return 1
 
@@ -71,6 +73,7 @@ def main():
   # The body contains the metadata for the file.
   body = {
     'name': TITLE,
+    'id' : str(metadata['id'],
     'description': DESCRIPTION,
     'parents' : [PARENT_ID]
   }

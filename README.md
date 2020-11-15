@@ -83,6 +83,9 @@ Configure:
 PATH_CONV= Folder which contains the converted
 LOG_D=Quantity of days to restore logs
 APPDIR= Path for bbb-drive installation
+
+Set foldernames by the server name adding a line in /files/serverlist.xml
+Format: <server name="servername">FOLDERNAME</server>
 ```
 4. Install (with SUDO or root user without sudo):
 ```
@@ -116,5 +119,17 @@ $cat /var/log/bbb_drive.log --> ERROR LOG
 
 After LOG_DAYS passed all logs are restored, but you keep the older LOG_DAYS days logs on /var/lob/bbb_drive.log.bk
 ```
+6. Deleting files:
+```
+Using the drive-get.py script you can delete files from drive:
+    To delete all files inside a folder use: 
+        cd /INSTALLATIONPATH/bbb-drive/files
+        python3 drive-get.py delInFolder "FOLDER_NAME"  
+    
+    To delete a single file:
+        cd /INSTALLATIONPATH/bbb-drive/files
+        python3 drive-get.py delByName "FILE_NAME"  
+    
 
+```
 
