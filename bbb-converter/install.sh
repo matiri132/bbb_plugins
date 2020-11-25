@@ -17,6 +17,8 @@ M_HOUR=6
 LOG_D=7
 #Path of bbb-recorder installation
 APPDIR="/root/bbb-recorder"
+#Date from start conversion in timestamp default: 09/11/2020
+STARTDATE=1604890800
 
 ##
 # LOGS in: 
@@ -42,6 +44,7 @@ case $1 in
         sed -i "s|TP_h|"${N_HOUR}"|g" ${WD}/bbb_converter.sh
         sed -i "s|BT_h|"${M_HOUR}"|g" ${WD}/bbb_converter.sh
         sed -i "s|LOGDAYS|"${LOG_D}"|g" ${WD}/bbb_converter.sh
+        sed -i "s|CONVDATE|"${STARTDATE}"|g" ${WD}/bbb_converter.sh
 
         cp ${WD}/files/bbb_converter.service ${WD}/bbb_converter.service
         sed -i "s|APPDIR|"${APPDIR}"|g" ${WD}/bbb_converter.service
