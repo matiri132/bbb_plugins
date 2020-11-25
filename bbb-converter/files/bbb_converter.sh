@@ -8,6 +8,7 @@ APPDIR="REC_PATH"
 TOP_HOUR=TP_h
 BOT_HOUR=BT_h
 LOG_RM=LOGDAYS
+CONV_DATE=1604890800
 
 
 PROC_n=0
@@ -83,6 +84,10 @@ next_file(){
         MEETING_ID=$(/usr/bin/basename "${donefile}" | /usr/bin/cut -f 1,2 -d '-')
         if [ -d "${PATH_BASE}/unpublished/presentation/${MEETING_ID}" ]
         then 
+            DELETED=true
+        fi
+
+        if [ $(date +%s -r "${donefile}") -ge $CONV_DATE ]; then
             DELETED=true
         fi
 
