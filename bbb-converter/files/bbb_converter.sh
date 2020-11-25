@@ -87,7 +87,7 @@ next_file(){
             DELETED=true
         fi
 
-        if [ $(date +%s -r "${donefile}") -ge ${CONV_DATE} ]; then
+        if [ ! $(date +%s -r "${donefile}") -ge ${CONV_DATE} ]; then
             DELETED=true
         fi
 
