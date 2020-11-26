@@ -73,7 +73,7 @@ def main():
   # The body contains the metadata for the file.
   body = {
     'name': TITLE,
-    'id' : str(metadata['id'],
+    'id' : str(metadata['id']),
     'description': DESCRIPTION,
     'parents' : [PARENT_ID]
   }
