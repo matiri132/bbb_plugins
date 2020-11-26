@@ -18,7 +18,7 @@ LOG_D=7
 #Path of bbb-recorder installation
 APPDIR="/root/bbb-recorder"
 #Date from start conversion in timestamp default: 09/11/2020
-STARTDATE=1604890800
+STARTDATE="1604880000" 
 
 ##
 # LOGS in: 

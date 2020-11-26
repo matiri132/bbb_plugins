@@ -35,7 +35,7 @@ set_nproc(){
 refresh_log(){
     ACT_HOUR=$(/bin/date +%s)
     t_elap=$(( ${ACT_HOUR} - ${LAST_HOUR}))
-    if [  ${t_elap}  -gt 60 ]
+    if [  ${t_elap}  -gt 3600 ]
     then
         LAST_HOUR="${ACT_HOUR}"
         cat /var/log/bbb_conv.log | grep -A 3 "Error" > /var/log/bbb_conv_err.log
@@ -86,8 +86,8 @@ next_file(){
         then 
             DELETED=true
         fi
-
-        if [ ! $(date +%s -r "${donefile}") -ge ${CONV_DATE} ]; then
+        FILE_DATE=$(date +%s -r "${PATH_BASE}/published/presentation/${donefile}")
+        if [ ! ${FILE_DATE} -ge ${CONV_DATE} ]; then
             DELETED=true
         fi
 
