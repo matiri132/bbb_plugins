@@ -62,7 +62,7 @@ def main():
     return 1
 
   DESCRIPTION = metadata['description']
-  ID = metadata['id']
+ 
 
   # Insert a file. Files are comprised of contents and metadata.
   # MediaFileUpload abstracts uploading file contents from a file on disk.
@@ -74,7 +74,6 @@ def main():
   # The body contains the metadata for the file.
   body = {
     'name': TITLE,
-    'id' : ID,
     'description': DESCRIPTION,
     'parents' : [PARENT_ID]
   }
