@@ -7,6 +7,7 @@ import pprint
 import sys
 import os
 import drivefunc as drivef
+import time
 
 SERVERLIST = "serverlist.xml"
 
@@ -54,10 +55,11 @@ def main():
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
 
   #Verify file existence
-  name = str(metadata['name'])
-  name_t= (name[:200]) if len(name) > 200 else name
-  TITLE = name_t + "_" + str(metadata['id'])
-  if( drivef.verify_file(drive_service, name , MIMETYPE, PARENT_ID)):
+  #name = str(metadata['name'])
+  #name_t= (name[:200]) if len(name) > 200 else name
+  date = time.strftime('%d-%m-%Y %H:%M', time.localtime(metadata['start-time']))
+  NAME = date + "_" + str(metadata['id'])
+  if( drivef.verify_file(drive_service, NAME , MIMETYPE, PARENT_ID)):
     print("ERROR: File already uploaded...")
     return 1
 
@@ -73,7 +75,7 @@ def main():
   )
   # The body contains the metadata for the file.
   body = {
-    'name': TITLE,
+    'name': NAME,
     'description': DESCRIPTION,
     'parents' : [PARENT_ID]
   }
