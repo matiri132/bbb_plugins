@@ -43,10 +43,10 @@ def main():
   metadata = drivef.get_metaData(str(sys.argv[2]))
 
   #Get bbb-recordings folder id from Drive
-  FOLDER_SV_ID = drivef.get_folderId(drive_service, 
-              drivef.get_folderName(SERVERLIST, metadata['server-name']))
+  FOLDER_NAME = drivef.get_folderName(SERVERLIST, metadata['server-name'])
+  FOLDER_SV_ID = drivef.get_folderId(drive_service,FOLDER_NAME )
   if(FOLDER_SV_ID == -1):
-    print("ERROR: Folder associated to server isn't exist, verify serverlist.xml")
+    print("ERROR: Folder associated to server isn't exist, verify serverlist.xml ->" + FOLDER_NAME)
     return -1
   #Verify sub folder existence
   if not (drivef.verify_folder( drive_service, FOLDER_SV_ID , metadata['context'])):
