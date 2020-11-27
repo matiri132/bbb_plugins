@@ -26,7 +26,7 @@ def main():
   
         s = int(METADATA['start-time'])/1000-21600
         date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
-        FILENAME = date + "-" + str(METADATA['id'])
+        FILENAME = date + "-" + str(METADATA['id'] + ".mp4")
 
         #FILENAME = str(METADATA['name']) + ":" + str(METADATA['id'])
         MIMETYPE = drivef.get_mimeType(sys.argv[2])
@@ -89,7 +89,7 @@ def main():
                 break
 
     if(str(sys.argv[1]) == "test"):            
-        
+
         
 
 
