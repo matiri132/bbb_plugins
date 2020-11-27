@@ -125,6 +125,8 @@ def get_metaData(filename):
   for elem in root:
     if(elem.tag == 'id'):
       metadata['id'] = str(elem.text)
+    elif(elem.tag == 'start_time'):
+        metadata['start-time'] = str(subelem.text) 
     for subelem in elem:
       if(subelem.tag == 'bbb-context'):
         #Class name
@@ -133,8 +135,6 @@ def get_metaData(filename):
         metadata['name'] = str(subelem.text)
       elif(subelem.tag == 'bbb-recording-description'):
         metadata['description'] = str(subelem.text)
-      elif(subelem.tag == 'start_time'):
-        metadata['start-time'] = str(subelem.text) 
       elif(subelem.tag == 'bbb-origin-server-name'):
         metadata['server-name'] = str(subelem.text)      
   return metadata
