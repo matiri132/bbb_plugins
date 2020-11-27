@@ -7,7 +7,7 @@ import pprint
 import sys
 import os
 import drivefunc as drivef
-import time
+import datetime
 
 SERVERLIST = "serverlist.xml"
 
@@ -57,7 +57,9 @@ def main():
   #Verify file existence
   #name = str(metadata['name'])
   #name_t= (name[:200]) if len(name) > 200 else name
-  date = time.strftime('%d-%m-%Y %H:%M', time.localtime(int(metadata['start-time'])))
+  s = int(metadata['start-time'])/1000.0
+  date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y %H:%M')
+  #date = time.strftime('%d-%m-%Y %H:%M', time.localtime(int(metadata['start-time']/1000)))
   NAME = date + "_" + str(metadata['id'])
   if( drivef.verify_file(drive_service, NAME , MIMETYPE, PARENT_ID)):
     print("ERROR: File already uploaded...")
