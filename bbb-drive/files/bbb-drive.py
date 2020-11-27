@@ -57,7 +57,7 @@ def main():
   #Verify file existence
   s = int(metadata['start-time'])/1000-21600
   date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
-  NAME = date + "-" + str(metadata['id'])
+  NAME = date + "-" + str(metadata['id']) + ".mp4"
   if( drivef.verify_file(drive_service, NAME , MIMETYPE, PARENT_ID)):
     print("ERROR: File already uploaded...")
     return 1

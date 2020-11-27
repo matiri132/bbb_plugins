@@ -75,7 +75,7 @@ do
         META_FILE=$(echo "${PATH_PRES}/${FILENAME}/metadata.xml" )
         FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
         UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
-        echo "UPLOAD OK. INFO: ${UPLOAD}"
+        echo "UPLOAD INFO: ${UPLOAD}"
     else    
         echo "No files to upload"
     fi
