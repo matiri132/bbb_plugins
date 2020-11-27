@@ -7,6 +7,7 @@ import oauth2client.client
 import io
 import sys
 import drivefunc as drivef
+import datetime
 
 
 # Path to the Service account cred file
@@ -22,7 +23,12 @@ def main():
     if(str(sys.argv[1]) == "fileExist"):
         # drive-get fileExist filename metadata.xml
         METADATA = drivef.get_metaData(sys.argv[3])
-        FILENAME = str(METADATA['name']) + ":" + str(METADATA['id'])
+
+        s = int(METADATA['start-time'])/1000.0
+        date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y %H:%M')
+        FILENAME = date + "-" + str(METADATA['id'])
+
+        #FILENAME = str(METADATA['name']) + ":" + str(METADATA['id'])
         MIMETYPE = drivef.get_mimeType(sys.argv[2])
         PARENT_ID = drivef.get_folderId(drive_service , METADATA['context'])
         if(drivef.verify_file(drive_service, FILENAME, MIMETYPE, PARENT_ID)):

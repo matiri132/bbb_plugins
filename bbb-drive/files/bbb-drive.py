@@ -59,8 +59,7 @@ def main():
   #name_t= (name[:200]) if len(name) > 200 else name
   s = int(metadata['start-time'])/1000.0
   date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y %H:%M')
-  #date = time.strftime('%d-%m-%Y %H:%M', time.localtime(int(metadata['start-time']/1000)))
-  NAME = date + "_" + str(metadata['id'])
+  NAME = date + "-" + str(metadata['id'])
   if( drivef.verify_file(drive_service, NAME , MIMETYPE, PARENT_ID)):
     print("ERROR: File already uploaded...")
     return 1
