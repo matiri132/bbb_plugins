@@ -55,10 +55,8 @@ def main():
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
 
   #Verify file existence
-  #name = str(metadata['name'])
-  #name_t= (name[:200]) if len(name) > 200 else name
-  s = int(metadata['start-time'])/1000.0
-  date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y %H:%M')
+  s = int(metadata['start-time'])/1000-21600
+  date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
   NAME = date + "-" + str(metadata['id'])
   if( drivef.verify_file(drive_service, NAME , MIMETYPE, PARENT_ID)):
     print("ERROR: File already uploaded...")

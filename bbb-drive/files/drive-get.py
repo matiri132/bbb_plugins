@@ -24,7 +24,7 @@ def main():
         # drive-get fileExist filename metadata.xml
         METADATA = drivef.get_metaData(sys.argv[3])
 
-        s = int(METADATA['start-time'])/1000.0
+        s = int(METADATA['start-time'])/1000-21600
         date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y %H:%M')
         FILENAME = date + "-" + str(METADATA['id'])
 
