@@ -72,6 +72,22 @@ def main():
             if page_token is None:
                 break
 
+    if(str(sys.argv[1]) == "list"):            
+        page_token = None
+        while True:
+            response = drive_service.files().list(q="mimeType='application/vnd.google-apps.folder'",
+                                          spaces='drive',
+                                          fields='nextPageToken, files(id, name)',
+                                          pageToken=page_token).execute()
+            for file in response.get('files', []):
+            # Process change
+                print('Found folder: %s (%s)' % (file.get('name'), file.get('id')))
+                if(str(sys.argv[2] == "delete") and file.get('name')!= "bbb-FIEECS"):
+                    drivef.delete_file(drive_service , str(file.get('id')))
+            page_token = response.get('nextPageToken', None)
+            if page_token is None:
+                break
+
 
     drive_service.close()
 

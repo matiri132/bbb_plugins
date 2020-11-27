@@ -46,7 +46,7 @@ def main():
   FOLDER_SV_ID = drivef.get_folderId(drive_service, 
               drivef.get_folderName(SERVERLIST, metadata['server-name']))
   if(FOLDER_SV_ID == -1):
-    print("ERROR: older associated to server isn't exist, verify serverlist.xml")
+    print("ERROR: Folder associated to server isn't exist, verify serverlist.xml")
     return -1
   #Verify sub folder existence
   if not (drivef.verify_folder( drive_service, FOLDER_SV_ID , metadata['context'])):
