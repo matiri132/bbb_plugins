@@ -126,7 +126,7 @@ def get_metaData(filename):
     if(elem.tag == 'id'):
       metadata['id'] = str(elem.text)
     elif(elem.tag == 'start_time'):
-        metadata['start-time'] = str(subelem.text) 
+        metadata['start-time'] = str(elem.text) 
     for subelem in elem:
       if(subelem.tag == 'bbb-context'):
         #Class name
