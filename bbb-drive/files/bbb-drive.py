@@ -51,7 +51,7 @@ def main():
     return -1
   #Verify sub folder existence
   if not (drivef.verify_folder( drive_service, FOLDER_SV_ID , metadata['context'])):
-    print("ERROR: Failed to create folder on drive.")
+    print("ERROR: Failed to create folder on drive. "  + str(FILENAME))
     return -1
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
 
@@ -60,7 +60,7 @@ def main():
   date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
   NAME = date + "-" + str(metadata['id']) + ".mp4"
   if( drivef.verify_file(drive_service, NAME , MIMETYPE, PARENT_ID)):
-    print("ERROR: File already uploaded...")
+    print("ERROR: File already uploaded -> " + str(FILENAME))
     return 1
 
   DESCRIPTION = metadata['description']
