@@ -84,6 +84,7 @@ def get_folderName(filename, servername):
     for subelem in elem:
       if(subelem.attrib['name'] == servername):
         return str(subelem.text)
+  return -1
 
 
 def get_folderId(service, folderName):
