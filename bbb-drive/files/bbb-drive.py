@@ -46,7 +46,8 @@ def main():
   FOLDER_NAME = drivef.get_folderName(SERVERLIST, metadata['server-name'])
   FOLDER_SV_ID = drivef.get_folderId(drive_service,FOLDER_NAME )
   if(FOLDER_SV_ID == -1 or FOLDER_NAME == -1):
-    print("ERROR: FolderERROR ->" +"FN:" +str(FOLDER_NAME) + "FID:" + str(FOLDER_SV_ID) + "-" + metadata['server-name'])
+    print("ERROR: FolderERROR ->" +"FN:" +str(FOLDER_NAME) + "FID:" + str(FOLDER_SV_ID) + "-" + metadata['server-name'] 
+            + "  " + str(FILENAME))
     return -1
   #Verify sub folder existence
   if not (drivef.verify_folder( drive_service, FOLDER_SV_ID , metadata['context'])):
