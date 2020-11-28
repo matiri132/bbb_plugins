@@ -80,9 +80,10 @@ def main():
             for file in response.get('files', []):
             # Process change
                 print('Found folder: %s (%s)' % (file.get('name'), file.get('id')))
-                if(str(sys.argv[2] == "delete")):
-                    if(str(file.get('name')) != "bbb-FIEECS"):
-                        drivef.delete_file(drive_service , str(file.get('id')))
+                if(len(sys.argv) > 2):
+                    if(str(sys.argv[2] == "delete")):
+                        if(str(file.get('name')) != "bbb-FIEECS"):
+                            drivef.delete_file(drive_service , str(file.get('id')))
             page_token = response.get('nextPageToken', None)
             if page_token is None:
                 break
