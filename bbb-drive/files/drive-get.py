@@ -26,9 +26,7 @@ def main():
   
         s = int(METADATA['start-time'])/1000-21600
         date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
-        FILENAME = date + "-" + str(METADATA['id'] + ".mp4")
-
-        #FILENAME = str(METADATA['name']) + ":" + str(METADATA['id'])
+        FILENAME = date + "-" + str(METADATA['id']) + ".mp4"
         MIMETYPE = drivef.get_mimeType(sys.argv[2])
         PARENT_ID = drivef.get_folderId(drive_service , METADATA['context'])
         if(drivef.verify_file(drive_service, FILENAME, MIMETYPE, PARENT_ID)):
@@ -87,11 +85,6 @@ def main():
             page_token = response.get('nextPageToken', None)
             if page_token is None:
                 break
-
-    if(str(sys.argv[1]) == "test"):            
-
-        
-
 
     drive_service.close()
 
