@@ -63,8 +63,6 @@ def main():
     print("ERROR: File already uploaded -> " + str(FILENAME))
     return 1
 
-  DESCRIPTION = metadata['description']
- 
 
   # Insert a file. Files are comprised of contents and metadata.
   # MediaFileUpload abstracts uploading file contents from a file on disk.
@@ -76,7 +74,6 @@ def main():
   # The body contains the metadata for the file.
   body = {
     'name': NAME,
-    'description': DESCRIPTION,
     'parents' : [PARENT_ID]
   }
   # Perform the request and print the result.

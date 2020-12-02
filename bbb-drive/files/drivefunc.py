@@ -134,8 +134,6 @@ def get_metaData(filename):
         metadata['context'] = str(subelem.text)
       elif(subelem.tag == 'bbb-recording-name'):
         metadata['name'] = str(subelem.text)
-      elif(subelem.tag == 'bbb-recording-description'):
-        metadata['description'] = str(subelem.text)
       elif(subelem.tag == 'bbb-origin-server-name'):
         metadata['server-name'] = str(subelem.text)      
   return metadata

@@ -37,7 +37,7 @@ next_file(){
 refresh_log(){
     ACT_HOUR=$(/bin/date +%s)
     t_elap=$(( ${ACT_HOUR} - ${LAST_HOUR}))
-    if [  ${t_elap}  -gt 60 ]
+    if [  ${t_elap}  -gt 300 ]
     then
         LAST_HOUR="${ACT_HOUR}"
         cat /var/log/bbb_drive.log | grep -A 3 "ERROR" > /var/log/bbb_drive_err.log
