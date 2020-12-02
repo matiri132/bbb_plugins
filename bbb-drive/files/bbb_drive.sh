@@ -22,7 +22,11 @@ next_file(){
             EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
             META_FILE=$(echo "${PATH_PRES}/${MEETING_ID}/metadata.xml" )
             EXIST=$(timeout 15s python3 drive-get.py fileExist ${MEETING_ID}.${EXT} ${META_FILE})
-
+            if [[ "${EXIST}" == "" ]]
+            then
+                echo "TIMEOUT: ${MEETING_ID}" > /var/log/bbb_drive_err.log
+                return
+            fi
             if [[ "${EXIST}" == "false" ]]
             then
                 echo "${MEETING_ID}.${EXT}"
