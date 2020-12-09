@@ -24,7 +24,7 @@ next_file(){
             EXIST=$(timeout 15s python3 drive-get.py fileExist ${MEETING_ID}.${EXT} ${META_FILE})
             if [[ "${EXIST}" == "" ]]
             then
-                echo "ERROR: [Errno: 07] TIMEOUT: ${MEETING_ID}" >> /var/log/bbb_drive.log
+                echo $(/bin/date +%b\ %d\ %H:%M:%S) "ERROR: [Errno: 07] TIMEOUT: ${MEETING_ID}" >> /var/log/bbb_drive.log
                 return
             fi
             if [[ "${EXIST}" == "false" ]]
