@@ -16,24 +16,24 @@ def main():
   # Path to the Service account cred file
   SERVICE_ACCOUNT_FILE = 'service.json'
   if not os.path.exists(SERVICE_ACCOUNT_FILE):
-    print("ERROR: No credentials file found. Get credentials and save in the directory as service.json")    
+    print("ERROR: [Errno: 00] No credentials file found. Get credentials and save in the directory as service.json")    
     return -1
 
   #Verify args
   if(len(sys.argv) < 3):
-    print('ERROR: No file especified. Syntaxis: bbb-drive filename metadatafile')
+    print('ERROR: [Errno: 01] No file especified. Syntaxis: bbb-drive filename metadatafile')
     return -1
 
 # Path to the file to upload passed as argument.
   FILENAME = str(sys.argv[1])
   if not os.path.exists(FILENAME):
-    print("ERROR: Especified file does not exist. ->" + str(FILENAME))    
+    print("ERROR: [Errno: 02] Especified file does not exist. ->" + str(FILENAME))    
     return -1
 
   # Metadata about the file
   MIMETYPE = drivef.get_mimeType(FILENAME)
   if(MIMETYPE == -1):
-    print("ERROR: Unkwown file format. ->" + str(FILENAME) + "  ->" + str(MIMETYPE)  )
+    print("ERROR: [Errno: 03] Unkwown file format. ->" + str(FILENAME) + "  ->" + str(MIMETYPE)  )
     return -1
 
   #Create drive service based on service account credentials
@@ -46,12 +46,12 @@ def main():
   FOLDER_NAME = drivef.get_folderName(SERVERLIST, metadata['server-name'])
   FOLDER_SV_ID = drivef.get_folderId(drive_service,FOLDER_NAME )
   if(FOLDER_SV_ID == -1 or FOLDER_NAME == -1):
-    print("ERROR: FolderERROR ->" +"FN:" +str(FOLDER_NAME) + "FID:" + str(FOLDER_SV_ID) + "-" + metadata['server-name'] 
+    print("ERROR: [Errno: 04] FolderERROR ->" +"FN:" +str(FOLDER_NAME) + "FID:" + str(FOLDER_SV_ID) + "-" + metadata['server-name'] 
             + "  " + str(FILENAME))
     return -1
   #Verify sub folder existence
   if not (drivef.verify_folder( drive_service, FOLDER_SV_ID , metadata['context'])):
-    print("ERROR: Failed to create folder on drive. "  + str(FILENAME))
+    print("ERROR: [Errno: 05] Failed to create folder on drive. "  + str(FILENAME))
     return -1
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
 
@@ -60,7 +60,7 @@ def main():
   date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
   NAME = date + "-" + str(metadata['id']) + ".mp4"
   if( drivef.verify_file(drive_service, NAME , MIMETYPE, PARENT_ID)):
-    print("ERROR: File already uploaded -> " + str(FILENAME))
+    print("ERROR: [Errno: 06] File already uploaded -> " + str(FILENAME))
     return 1
 
 

@@ -24,7 +24,7 @@ next_file(){
             EXIST=$(timeout 15s python3 drive-get.py fileExist ${MEETING_ID}.${EXT} ${META_FILE})
             if [[ "${EXIST}" == "" ]]
             then
-                echo "TIMEOUT: ${MEETING_ID}" > /var/log/bbb_drive_err.log
+                echo "TIMEOUT: ${MEETING_ID}" >> /var/log/bbb_drive_err.log
                 return
             fi
             if [[ "${EXIST}" == "false" ]]
@@ -44,9 +44,11 @@ refresh_log(){
     if [  ${t_elap}  -gt 300 ]
     then
         LAST_HOUR="${ACT_HOUR}"
-        cat /var/log/bbb_drive.log | grep -A 3 "ERROR" > /var/log/bbb_drive_err.log
-        cat /var/log/bbb_drive.log | grep -A 6 "Errno" > /var/log/bbb_drive_err.log
-        cat /var/log/bbb_drive.log | grep -A 6 "UPLOAD INFO: {'id'" > /var/log/bbb_conv_ok.log
+        cat /var/log/bbb_drive.log | grep -A 6 "Errno" >> /var/log/bbb_drive_err.log
+        cat /var/log/bbb_drive.log | grep -A 6 "UPLOAD INFO: {'id'" >> /var/log/bbb_drive_ok.log
+        cat /var/log/bbb_drive.log > /var/log/bbb_drive.log.bk
+        rm /var/log/bbb_drive.log 
+        touch /var/log/bbb_drive.log
     fi
     day_elap=$(((${ACT_HOUR} - ${LOG_TIME})/86400 ))
     if [  ${day_elap}  -gt $(( ${LOG_RM} - 1 ))  ]
