@@ -24,7 +24,7 @@ next_file(){
             EXIST=$(timeout 15s python3 drive-get.py fileExist ${MEETING_ID}.${EXT} ${META_FILE})
             if [[ "${EXIST}" == "" ]]
             then
-                echo "TIMEOUT: ${MEETING_ID}" >> /var/log/bbb_drive_err.log
+                echo "ERROR: [Errno: 07] TIMEOUT: ${MEETING_ID}" >> /var/log/bbb_drive.log
                 return
             fi
             if [[ "${EXIST}" == "false" ]]
@@ -81,11 +81,11 @@ do
         META_FILE=$(echo "${PATH_PRES}/${FILENAME}/metadata.xml" )
         FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
         UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
-        echo "UPLOAD INFO: ${UPLOAD}"
-        refresh_log
+        echo "UPLOAD INFO: ${UPLOAD}"    
     else    
-        echo "No files to upload"
+        echo "STATUS: No files to upload"
     fi
+    refresh_log
     sleep 10
 done
 
