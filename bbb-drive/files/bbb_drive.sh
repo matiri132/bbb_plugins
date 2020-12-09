@@ -46,7 +46,7 @@ refresh_log(){
         LAST_HOUR="${ACT_HOUR}"
         cat /var/log/bbb_drive.log | grep -A 6 "Errno" >> /var/log/bbb_drive_err.log
         cat /var/log/bbb_drive.log | grep -A 6 "UPLOAD INFO: {'id'" >> /var/log/bbb_drive_ok.log
-        cat /var/log/bbb_drive.log > /var/log/bbb_drive.log.bk
+        cat /var/log/bbb_drive.log >> /var/log/bbb_drive.log.bk
         rm /var/log/bbb_drive.log 
         touch /var/log/bbb_drive.log
     fi
@@ -59,7 +59,6 @@ refresh_log(){
         rm /var/log/bbb_drive_ok.log
         touch /var/log/bbb_drive_ok.log
         rm /var/log/bbb_drive.log.bk
-        cp /var/log/bbb_drive.log /var/log/bbb_drive.log.bk
     fi
        
 }
@@ -83,6 +82,7 @@ do
         FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
         UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
         echo "UPLOAD INFO: ${UPLOAD}"
+        refresh_log
     else    
         echo "No files to upload"
     fi
