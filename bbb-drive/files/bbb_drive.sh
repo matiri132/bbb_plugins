@@ -45,7 +45,8 @@ refresh_log(){
     then
         LAST_HOUR="${ACT_HOUR}"
         cat /var/log/bbb_drive.log | grep -A 3 "ERROR" > /var/log/bbb_drive_err.log
-        cat /var/log/bbb_drive.log | grep -A 1 "UPLOAD INFO:" > /var/log/bbb_conv_ok.log
+        cat /var/log/bbb_drive.log | grep -A 6 "Errno" > /var/log/bbb_drive_err.log
+        cat /var/log/bbb_drive.log | grep -A 6 "UPLOAD INFO: {'id'" > /var/log/bbb_conv_ok.log
     fi
     day_elap=$(((${ACT_HOUR} - ${LOG_TIME})/86400 ))
     if [  ${day_elap}  -gt $(( ${LOG_RM} - 1 ))  ]
