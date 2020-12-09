@@ -25,9 +25,7 @@ next_file(){
             if [[ "${EXIST}" == "" ]]
             then
                 echo $(/bin/date +%b\ %d\ %H:%M:%S) "ERROR: [Errno: 07] TIMEOUT: ${MEETING_ID}" >> /var/log/bbb_drive.log
-                return
-            fi
-            if [[ "${EXIST}" == "false" ]]
+            elif [[ "${EXIST}" == "false" ]]
             then
                 echo "${MEETING_ID}.${EXT}"
                 return
@@ -81,7 +79,7 @@ do
         META_FILE=$(echo "${PATH_PRES}/${FILENAME}/metadata.xml" )
         FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
         UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
-        echo "UPLOAD INFO: ${UPLOAD}"    
+        echo "UPLOAD INFO: ${UPLOAD} --- INFO: ${FILENAME_PATH} ${META_FILE}"    
     else    
         echo "STATUS: No files to upload"
     fi
