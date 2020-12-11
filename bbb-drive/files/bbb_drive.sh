@@ -45,7 +45,7 @@ do
     FILENAME_PATH=""
     UPLOAD=""
     
-    for videofile in $(ls -t "${PATH_CONV}")
+    for videofile in $(ls -tr "${PATH_CONV}")
         do
             FILENAME=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 1 -d '.')
             EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
@@ -53,13 +53,8 @@ do
             FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
             UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
             echo "UPLOAD INFO: ${UPLOAD} --- INFO: ${FILENAME_PATH} ${META_FILE}"
-            
-            error=$(echo "${UPLOAD}" | grep "Errno")
-            if  [ -z  "${error}" ]
-            then
-                sleep 10
-                refresh_log            
-            fi
+            sleep 5
+            refresh_log 
         done
     echo "STATUS: NO FILE TO UPLOAD -> Next try in 5 minutes"
     sleep 300
