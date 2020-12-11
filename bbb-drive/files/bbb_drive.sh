@@ -54,7 +54,7 @@ do
             echo "UPLOAD INFO: ${UPLOAD} --- INFO: ${FILENAME_PATH} ${META_FILE}"
             
             error=$(echo "${UPLOAD}" | grep "Errno")
-            if  [ -z  ${error} ]
+            if  [ -z  "${error}" ]
             then
                 sleep 10
                 refresh_log            
