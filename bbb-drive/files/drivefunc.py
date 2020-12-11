@@ -97,12 +97,11 @@ def get_folderId(service, folderName):
   Returns:
       [string]: [folder id]
   """
-  query = "name=\'" + str(folderName) + "\'"
   while True:
-    response = service.files().list(q=query,
-                                    spaces='drive',
-                                    fields='nextPageToken, files(id, name)',
-                                    pageToken=None).execute()
+    response = service.files().list(q="mimeType='application/vnd.google-apps.folder'",
+                                          spaces='drive',
+                                          fields='nextPageToken, files(id, name)',
+                                          pageToken=None).execute()
     for file in response.get('files', []):
         # Process change
         if(file.get('name') == folderName):
@@ -151,16 +150,15 @@ def verify_folder(service , parentId, foldername):
       [type]: [description]
   """
   page_token = None
-  query = "name=\'" + str(foldername) + "\'"
   while True:
-    response = service.files().list(q=query,
-                                    spaces='drive',
-                                    fields='nextPageToken, files(name, id, parents)',
-                                    pageToken=page_token).execute()
+    response = service.files().list(q="mimeType='application/vnd.google-apps.folder'",
+                                          spaces='drive',
+                                          fields='nextPageToken, files(name, id, parents)',
+                                          pageToken=page_token).execute()
     for file in response.get('files', []):
       # Process change
       parents = file.get('parents')
-      if((parents[0] == parentId)):
+      if((file.get('name') == foldername) and (parents[0] == parentId)):
         return True
     page_token = response.get('nextPageToken', None)
     if page_token is None:
