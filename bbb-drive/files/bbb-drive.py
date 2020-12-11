@@ -13,6 +13,7 @@ SERVERLIST = "serverlist.xml"
 
 def main():
  
+  print("Initializing upload...")
    #Verify args
   if(len(sys.argv) < 3):
     print('ERROR: [Errno: 01] No file especified. Syntaxis: bbb-drive filename metadatafile')
@@ -45,8 +46,8 @@ def main():
 
   #Create drive service based on service account credentials
   drive_service = drivef.initialize_drive(SERVICE_ACCOUNT_FILE)
-
-  #Get bbb-recordings folder id from Drive
+  print("Verify folders...")
+  #Get bbb-recordings folder id f rom Drive
   FOLDER_NAME = drivef.get_folderName(SERVERLIST, metadata['server-name'])
   FOLDER_SV_ID = drivef.get_folderId(drive_service,FOLDER_NAME )
   if(FOLDER_SV_ID == -1 or FOLDER_NAME == -1):
@@ -59,6 +60,7 @@ def main():
     return -1
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
 
+  print("Verify file...")
   #Verify file existence
   s = int(metadata['start-time'])/1000-21600
   date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
@@ -67,7 +69,7 @@ def main():
     print("ERROR: [Errno: 06] File already uploaded -> " + str(FILENAME))
     return 1
 
-
+  print("Uploading...")
   # Insert a file. Files are comprised of contents and metadata.
   # MediaFileUpload abstracts uploading file contents from a file on disk.
   media_body = googleapiclient.http.MediaFileUpload(
