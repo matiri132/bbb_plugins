@@ -51,7 +51,7 @@ do
             EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
             META_FILE=$(echo "${PATH_PRES}/${FILENAME}/metadata.xml" )
             FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
-            UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
+            UPLOAD=$(timeout 60 python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
             echo "UPLOAD INFO: ${UPLOAD} --- INFO: ${FILENAME_PATH} ${META_FILE}"
             sleep 5
             refresh_log 
