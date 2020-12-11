@@ -192,3 +192,22 @@ def verify_file(service, filename, mimeType, parentId):
     if page_token is None:
         break
   return False
+
+def verify_file_q(service, filename, parentId):
+  page_token = None
+  query = "name=\'" + str(filename) + "\'"
+  while True:
+    response = service.files().list(q=query,
+                                  spaces='drive',
+                                  fields='nextPageToken, files(name, parents, id)',
+                                  pageToken=page_token).execute()
+  for file in response.get('files', []):
+    # Process change
+    print(file.get('id'))
+    parents = file.get('parents')
+    if(parents[0] == parentId):
+      return True
+    page_token = response.get('nextPageToken', None)
+    if page_token is None:
+      break
+    return False

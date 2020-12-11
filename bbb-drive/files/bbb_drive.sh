@@ -9,33 +9,6 @@ LOG_TIME=$(/bin/date +%s)
 
 shopt -s nullglob
 
-#Determinates the next file to upload.
-next_file(){
-    local EXIST=""
-    if [ -z "$(ls -A ${PATH_CONV})" ]
-    then
-        echo "NULL"
-    else
-        for videofile in $(ls -tr "${PATH_CONV}")
-        do
-            MEETING_ID=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 1 -d '.')
-            EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
-            META_FILE=$(echo "${PATH_PRES}/${MEETING_ID}/metadata.xml" )
-            EXIST=$(timeout 10s python3 drive-get.py fileExist ${MEETING_ID}.${EXT} ${META_FILE})
-            if [[ "${EXIST}" == "" ]]
-            then
-                echo $(/bin/date +%b\ %d\ %H:%M:%S) "ERROR: [Errno: 07] TIMEOUT: ${MEETING_ID}" >> /var/log/bbb_drive.log
-            elif [[ "${EXIST}" == "false" ]]
-            then
-                echo "${MEETING_ID}.${EXT}"
-                return
-            fi
-        done
-        echo "NULL"
-    fi
-    
-}
-
 refresh_log(){
     ACT_HOUR=$(/bin/date +%s)
     t_elap=$(( ${ACT_HOUR} - ${LAST_HOUR}))
@@ -63,27 +36,25 @@ refresh_log(){
 ######################
 ### MAIN FUNCTION ####
 ######################
-FILE_TO_UPLOAD=""
 while true
 do
-    FILE_TO_UPLOAD=$(next_file)
     EXT=""
     FILENAME=""
     META_FILE=""
     FILENAME_PATH=""
     UPLOAD=""
-    if [ "${FILE_TO_UPLOAD}" != "NULL" ]
-    then
-        FILENAME=$(/usr/bin/basename "${FILE_TO_UPLOAD}" | /usr/bin/cut -f 1 -d '.')
-        EXT=$(/usr/bin/basename "${FILE_TO_UPLOAD}" | /usr/bin/cut -f 2 -d '.')
-        META_FILE=$(echo "${PATH_PRES}/${FILENAME}/metadata.xml" )
-        FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
-        UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
-        echo "UPLOAD INFO: ${UPLOAD} --- INFO: ${FILENAME_PATH} ${META_FILE}"    
-    else    
-        echo "STATUS: No files to upload"
-    fi
-    refresh_log
-    sleep 10
+    
+    for videofile in $(ls -tr "${PATH_CONV}")
+        do
+            MEETING_ID=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 1 -d '.')
+            EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
+            META_FILE=$(echo "${PATH_PRES}/${MEETING_ID}/metadata.xml" )
+            FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
+            UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
+            echo "UPLOAD INFO: ${UPLOAD} --- INFO: ${FILENAME_PATH} ${META_FILE}"
+            sleep 10
+            refresh_log            
+        done
+      
 done
 

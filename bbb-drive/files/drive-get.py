@@ -72,18 +72,18 @@ def main():
 
     if(str(sys.argv[1]) == "list"):            
         page_token = None
+        if(str(sys.argv[2]) == "folder"):
+            query="mimeType='application/vnd.google-apps.folder'"
+        if(str(sys.argv[2]) == "mp4"):
+            query="mimeType='video/mp4'"
         while True:
-            response = drive_service.files().list(q="mimeType='application/vnd.google-apps.folder'",
+            response = drive_service.files().list(q=query, #
                                           spaces='drive',
                                           fields='nextPageToken, files(id, name)',
                                           pageToken=page_token).execute()
             for file in response.get('files', []):
             # Process change
-                print('Found folder: %s (%s)' % (file.get('name'), file.get('id')))
-                #if(len(sys.argv) > 2):
-                    #if(str(sys.argv[2] == "delete")):
-                        #if(str(file.get('name')) != "bbb-FIEECS"):
-                            #drivef.delete_file(drive_service , str(file.get('id')))
+                print(' %s (%s)' % (file.get('name'), file.get('id')))
             page_token = response.get('nextPageToken', None)
             if page_token is None:
                 break

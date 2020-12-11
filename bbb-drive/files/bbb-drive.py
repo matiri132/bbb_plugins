@@ -13,21 +13,25 @@ SERVERLIST = "serverlist.xml"
 
 def main():
  
+   #Verify args
+  if(len(sys.argv) < 3):
+    print('ERROR: [Errno: 01] No file especified. Syntaxis: bbb-drive filename metadatafile')
+    return -1
+
   # Path to the Service account cred file
   SERVICE_ACCOUNT_FILE = 'service.json'
   if not os.path.exists(SERVICE_ACCOUNT_FILE):
     print("ERROR: [Errno: 00] No credentials file found. Get credentials and save in the directory as service.json")    
     return -1
 
-  #Verify args
-  if(len(sys.argv) < 3):
-    print('ERROR: [Errno: 01] No file especified. Syntaxis: bbb-drive filename metadatafile')
-    return -1
-
-# Path to the file to upload passed as argument.
+ # Path to the file to upload passed as argument.
   FILENAME = str(sys.argv[1])
   if not os.path.exists(FILENAME):
     print("ERROR: [Errno: 02] Especified file does not exist. ->" + str(FILENAME))    
+    return -1
+
+  if not os.path.exists(sys.argv[2]):
+    print("ERROR: [Errno: 02] Especified file does not exist. ->" + str(sys.argv[2]))    
     return -1
 
   # Metadata about the file
@@ -36,11 +40,11 @@ def main():
     print("ERROR: [Errno: 03] Unkwown file format. ->" + str(FILENAME) + "  ->" + str(MIMETYPE)  )
     return -1
 
-  #Create drive service based on service account credentials
-  drive_service = drivef.initialize_drive(SERVICE_ACCOUNT_FILE)
-
   #get metadata from bbb recording
   metadata = drivef.get_metaData(str(sys.argv[2]))
+
+  #Create drive service based on service account credentials
+  drive_service = drivef.initialize_drive(SERVICE_ACCOUNT_FILE)
 
   #Get bbb-recordings folder id from Drive
   FOLDER_NAME = drivef.get_folderName(SERVERLIST, metadata['server-name'])
