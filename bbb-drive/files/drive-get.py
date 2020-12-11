@@ -88,6 +88,21 @@ def main():
             if page_token is None:
                 break
 
+    if(str(sys.argv[1]) == "query"):            
+        page_token = None
+        query = sys.argv[2]
+        while True:
+            response = drive_service.files().list(q=query, #
+                                          spaces='drive',
+                                          fields='nextPageToken, files(id, name)',
+                                          pageToken=page_token).execute()
+            for file in response.get('files', []):
+            # Process change
+                print(' %s (%s)' % (file.get('name'), file.get('id')))
+            page_token = response.get('nextPageToken', None)
+            if page_token is None:
+                break
+
     drive_service.close()
 
 if __name__ == '__main__':

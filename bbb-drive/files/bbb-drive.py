@@ -63,7 +63,7 @@ def main():
   s = int(metadata['start-time'])/1000-21600
   date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
   NAME = date + "-" + str(metadata['id']) + ".mp4"
-  if( drivef.verify_file(drive_service, NAME , MIMETYPE, PARENT_ID)):
+  if( drivef.verify_file(drive_service, NAME , PARENT_ID)):
     print("ERROR: [Errno: 06] File already uploaded -> " + str(FILENAME))
     return 1
 
