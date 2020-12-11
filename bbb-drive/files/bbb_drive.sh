@@ -52,7 +52,7 @@ do
             FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
             UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
             echo "UPLOAD INFO: ${UPLOAD} --- INFO: ${FILENAME_PATH} ${META_FILE}"
-            if  [ -z $(echo ${UPLOAD} \| grep "Errno") ]
+            if  [ -z $(echo "${UPLOAD}" \| grep "Errno") ]
             then
                 sleep 10
                 refresh_log            
