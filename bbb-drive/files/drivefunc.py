@@ -184,12 +184,13 @@ def verify_file(service, filename, parentId):
                                     spaces='drive',
                                     fields='nextPageToken, files(name, parents, id)',
                                     pageToken=page_token).execute()
-  for file in response.get('files', []):
+    if not response.get('files' , []):
+      return False
+    for file in response.get('files', []):
     # Process change
-    parents = file.get('parents')
-    if(parents[0] == parentId):
-      return True
-    page_token = response.get('nextPageToken', None)
-    if page_token is None:
-      break
-    return False
+      parents = file.get('parents')
+      if(parents[0] == parentId):
+        return True
+      page_token = response.get('nextPageToken', None)
+      if page_token is None:
+        break

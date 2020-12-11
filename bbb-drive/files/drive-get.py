@@ -96,6 +96,8 @@ def main():
                                           spaces='drive',
                                           fields='nextPageToken, files(id, name)',
                                           pageToken=page_token).execute()
+            if not response.get('files' , []):
+                print("Empty")
             for file in response.get('files', []):
             # Process change
                 print(' %s (%s)' % (file.get('name'), file.get('id')))
