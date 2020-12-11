@@ -175,13 +175,13 @@ def verify_folder(service , parentId, foldername):
   else:
     return False
 
-def verify_file(service, filename, parentId):
+def verify_file(service, filename):
   page_token = None
   query = "name=\'" + str(filename) + "\'"
   while True:
     response = service.files().list(q=query,
                                     spaces='drive',
-                                    fields='nextPageToken, files(name, parents, id)',
+                                    fields='files(name)',
                                     pageToken=page_token).execute()
     if not response.get('files' , []):
       return False
