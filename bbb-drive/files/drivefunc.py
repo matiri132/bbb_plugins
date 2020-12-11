@@ -178,7 +178,6 @@ def verify_folder(service , parentId, foldername):
 def verify_file(service, filename, parentId):
   page_token = None
   query = "name=\'" + str(filename) + "\'"
-  print(query)
   while True:
     response = service.files().list(q=query,
                                     spaces='drive',

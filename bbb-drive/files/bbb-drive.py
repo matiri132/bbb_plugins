@@ -68,7 +68,6 @@ def main():
     print("ERROR: [Errno: 06] File already uploaded -> " + str(FILENAME))
     return 1
 
-  print("Uploading...")
   # Insert a file. Files are comprised of contents and metadata.
   # MediaFileUpload abstracts uploading file contents from a file on disk.
   media_body = googleapiclient.http.MediaFileUpload(
