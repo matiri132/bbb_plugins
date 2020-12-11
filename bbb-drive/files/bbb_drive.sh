@@ -44,7 +44,7 @@ do
     FILENAME_PATH=""
     UPLOAD=""
     
-    for videofile in $(ls -ltr "${PATH_CONV}")
+    for videofile in $(ls -t "${PATH_CONV}")
         do
             FILENAME=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 1 -d '.')
             EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
