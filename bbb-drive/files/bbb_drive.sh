@@ -53,7 +53,7 @@ do
             UPLOAD=$(python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
             echo "UPLOAD INFO: ${UPLOAD} --- INFO: ${FILENAME_PATH} ${META_FILE}"
             
-            error = $(echo "${UPLOAD}" | grep "Errno")
+            error=$(echo "${UPLOAD}" | grep "Errno")
             if  [ -z  ${error} ]
             then
                 sleep 10
