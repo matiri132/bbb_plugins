@@ -185,11 +185,5 @@ def verify_file(service, filename, parentId):
                                     pageToken=page_token).execute()
     if not response.get('files' , []):
       return False
-    for file in response.get('files', []):
-    # Process change
-      parents = file.get('parents')
-      if(parents[0] == parentId):
-        return True
-      page_token = response.get('nextPageToken', None)
-      if page_token is None:
-        break
+    else:
+      return True
