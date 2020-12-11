@@ -13,8 +13,7 @@ SERVERLIST = "serverlist.xml"
 
 def main():
  
-  print("Initializing upload...")
-   #Verify args
+     #Verify args
   if(len(sys.argv) < 3):
     print('ERROR: [Errno: 01] No file especified. Syntaxis: bbb-drive filename metadatafile')
     return -1
@@ -46,7 +45,7 @@ def main():
 
   #Create drive service based on service account credentials
   drive_service = drivef.initialize_drive(SERVICE_ACCOUNT_FILE)
-  print("Verify folders...")
+  
   #Get bbb-recordings folder id f rom Drive
   FOLDER_NAME = drivef.get_folderName(SERVERLIST, metadata['server-name'])
   FOLDER_SV_ID = drivef.get_folderId(drive_service,FOLDER_NAME )
@@ -60,7 +59,7 @@ def main():
     return -1
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
 
-  print("Verify file...")
+  
   #Verify file existence
   s = int(metadata['start-time'])/1000-21600
   date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
