@@ -46,7 +46,7 @@ do
     
     for videofile in $(ls -tr "${PATH_CONV}")
         do
-            FILENAME_PATH=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 1 -d '.')
+            FILENAME=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 1 -d '.')
             EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
             META_FILE=$(echo "${PATH_PRES}/${FILENAME}/metadata.xml" )
             FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
