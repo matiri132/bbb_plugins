@@ -58,6 +58,8 @@ do
                 refresh_log            
             fi
         done
-      
+    echo "STATUS: NO FILE TO UPLOAD -> Next try in 5 minutes"
+    sleep 300
+
 done
 
