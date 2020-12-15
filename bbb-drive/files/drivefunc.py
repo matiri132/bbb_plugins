@@ -98,17 +98,14 @@ def get_folderId(service, folderName):
       [string]: [folder id]
   """
   while True:
-    response = service.files().list(q="mimeType='application/vnd.google-apps.folder'",
+    query="name='" + folderName + "' and mimeType='application/vnd.google-apps.folder'"
+    response = service.files().list(q=query,
                                           spaces='drive',
-                                          fields='nextPageToken, files(id, name)',
-                                          pageToken=None).execute()
+                                          fields='nextPageToken, files(id, name)').execute()
     for file in response.get('files', []):
-        # Process change
-        if(file.get('name') == folderName):
-          return file.get('id')
-    page_token = response.get('nextPageToken', None)
-    if page_token is None:
-        return -1
+        #if(file.get('name') == folderName):
+        return file.get('id')
+    return -1
 
 def get_metaData(filename):
   """[Get metadata from XML file] 
