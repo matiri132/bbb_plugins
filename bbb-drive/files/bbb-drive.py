@@ -79,7 +79,7 @@ def main():
   date = datetime.datetime.fromtimestamp(s).strftime('%d-%m-%Y_%H:%M')
   NAME = date + "-" + str(metadata['id']) + ".mp4"
   if( drivef.verify_file(drive_service, NAME)):
-    logger.error("[Errno: 06] File already uploaded -> " + str(FILENAME))
+    logger.info("[INFO] File already uploaded -> " + str(FILENAME))
     return 1
 
   # Insert a file. Files are comprised of contents and metadata.

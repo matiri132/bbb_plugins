@@ -15,8 +15,9 @@ refresh_log(){
     if [  ${t_elap}  -gt 300 ]
     then
         LAST_HOUR="${ACT_HOUR}"
-        cat /var/log/bbb_drive.log | grep  "Errno" >> /var/log/bbb_drive_err.log
-        cat /var/log/bbb_drive.log | grep -A 2 "Error" >> /var/log/bbb_drive_err.log
+        cat /var/log/bbb_drive_debug.log | grep  "ERROR" >> /var/log/bbb_drive_err.log
+        cat /var/log/bbb_drive_debug.log | grep  "ERROR" >> /var/log/bbb_drive.log
+        cat /var/log/bbb_drive_debug.log | grep  "INFO" >> /var/log/bbb_drive.log
         cat /var/log/bbb_drive.log | grep -A 4 "UPLOAD INFO: {'id'" >> /var/log/bbb_drive_ok.log
         cat /var/log/bbb_drive.log >> /var/log/bbb_drive.log.bk
         cat /dev/null > /var/log/bbb_drive.log
