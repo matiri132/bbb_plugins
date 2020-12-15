@@ -53,7 +53,7 @@ do
             FILENAME_PATH=$(echo "${PATH_CONV}/${FILENAME}.${EXT}")
             UPLOAD=$(timeout 300 python3 bbb-drive.py ${FILENAME_PATH} ${META_FILE})
             echo "UPLOAD INFO: ${UPLOAD} --- INFO: ${FILENAME_PATH} ${META_FILE}"
-            sleep 5
+            sleep 2
             refresh_log 
         done
     echo "STATUS: NO FILE TO UPLOAD -> Next try in 5 minutes"
