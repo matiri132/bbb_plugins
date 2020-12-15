@@ -7,7 +7,7 @@ ACT_HOUR=$(/bin/date +%s)
 LAST_HOUR=$(/bin/date +%s)
 LOG_TIME=$(/bin/date +%s)
 
-shopt -s nullglob
+#shopt -s nullglob
 
 refresh_log(){
     ACT_HOUR=$(/bin/date +%s)
