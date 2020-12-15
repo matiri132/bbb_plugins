@@ -19,18 +19,17 @@ refresh_log(){
         cat /var/log/bbb_drive.log | grep -A 2 "Error" >> /var/log/bbb_drive_err.log
         cat /var/log/bbb_drive.log | grep -A 4 "UPLOAD INFO: {'id'" >> /var/log/bbb_drive_ok.log
         cat /var/log/bbb_drive.log >> /var/log/bbb_drive.log.bk
-        rm /var/log/bbb_drive.log 
-        touch /var/log/bbb_drive.log
+        cat /dev/null > /var/log/bbb_drive.log
+
     fi
+
     day_elap=$(((${ACT_HOUR} - ${LOG_TIME})/86400 ))
     if [  ${day_elap}  -gt $(( ${LOG_RM} - 1 ))  ]
     then
         LOG_TIME=$(/bin/date +%s)
-        rm /var/log/bbb_drive_err.log
-        touch /var/log/bbb_drive_err.log
-        rm /var/log/bbb_drive_ok.log
-        touch /var/log/bbb_drive_ok.log
-        rm /var/log/bbb_drive.log.bk
+        cat /dev/null > /var/log/bbb_drive_err.log
+        cat /dev/null > /var/log/bbb_drive_ok.log
+        cat /dev/null > /var/log/bbb_drive.log.bk
     fi
        
 }
@@ -45,7 +44,7 @@ do
     FILENAME_PATH=""
     UPLOAD=""
     
-    for videofile in $(ls -tr "${PATH_CONV}")
+    for videofile in $(ls -tr "${PATH_CONV}/*.mp4")
         do
             FILENAME=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 1 -d '.')
             EXT=$(/usr/bin/basename "${videofile}" | /usr/bin/cut -f 2 -d '.') 
