@@ -22,7 +22,7 @@ def initialize_drive(sv_acc_cred):
   credentials = service_account.Credentials.from_service_account_file(sv_acc_cred)
   scoped_credentials = credentials.with_scopes(['https://www.googleapis.com/auth/drive'])
   #service creation
-  drive = build('drive', 'v3', credentials=scoped_credentials)
+  drive = build('drive', 'v3', credentials=scoped_credentials, cache_discovery=False)
   return drive
 
 def delete_file(service, file_id):
