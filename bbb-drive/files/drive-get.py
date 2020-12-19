@@ -10,6 +10,7 @@ import drivefunc as drivef
 import datetime
 
 
+
 # Path to the Service account cred file
 SERVICE_ACCOUNT_FILE = 'service.json'
 
@@ -94,16 +95,75 @@ def main():
         while True:
             response = drive_service.files().list(q=query, #
                                           spaces='drive',
-                                          fields='nextPageToken, files(id, name)',
+                                          fields='*',
                                           pageToken=page_token).execute()
             if not response.get('files' , []):
                 print("Empty")
             for file in response.get('files', []):
             # Process change
+                pprint.pprint(file)
                 print(' %s (%s)' % (file.get('name'), file.get('id')))
             page_token = response.get('nextPageToken', None)
             if page_token is None:
                 break
+    
+    if(str(sys.argv[1]) == "queryp"):            
+        page_token = None
+        query = sys.argv[2]
+        while True:
+            response = drive_service.permissions().list(fileId=str(sys.argv[2]), 
+                                          pageToken=page_token).execute()
+            if not response.get('permissions' , []):
+                print("Empty")
+            for permission in response.get('permissions', []):
+            # Process change
+                pprint.pprint(permission)
+            page_token = response.get('nextPageToken', None)
+            if page_token is None:
+                break
+    
+    if(str(sys.argv[1]) == "about"):            
+        about = drive_service.about().get(fields='*').execute()
+        pprint.pprint(about)
+ 
+    if(str(sys.argv[1]) == "owners"):
+        owners = drivef.get_folderOwner(drive_service , str(sys.argv[2]))
+        pprint.pprint(owners)
+
+    if(str(sys.argv[1]) == "update"):
+        #argv[2] = file to update , argv[3] = FolderToCopyOwner
+        file = drive_service.files().get(fileId=str(sys.argv[2])).execute()
+        # File's new metadata.
+        file['canMoveItemOutOfDrive'] = True
+        # Send the request to the API.
+        updated_file = drive_service.files().update(
+            fileId=str(sys.argv[2]),
+            body=file).execute()
+        pprint.pprint(updated_file)
+        
+     #Devuelve el owner de un archivo por nombre   
+    if(str(sys.argv[1]) == "ownerperm"):
+        file_id = drive_service.files().list(q="name='" + str(sys.argv[2]) + "' and trashed=false", fields="files(id)").execute()
+        permissions = drive_service.permissions().list(fileId=file_id["files"][0]["id"]).execute()
+        for perm in permissions.get('permissions' , []):
+            role = perm.get('role')
+            if( role == "owner"):
+                print(perm.get('id'))
+
+    #Devuelve objeto permiso de un archivo con su permision id
+    if(str(sys.argv[1]) == "permissions"):
+        file_id = drive_service.files().list(q="name='" + str(sys.argv[2]) + "' and trashed=false", fields="files(id)").execute()
+        permissions = drive_service.permissions().list(fileId=file_id["files"][0]["id"]).execute()
+        for perm in permissions.get('permissions' , []):
+            id = perm.get('id')
+            if( id == str(sys.argv[3])):
+                pprint.pprint(perm)
+       
+    if(str(sys.argv[1]) == "updateperm"):
+        file_id = drive_service.files().list(q="name='" + str(sys.argv[2]) + "' and trashed=false", fields="files(id)").execute()
+        drivef.update_permission(drive_service, file_id["files"][0]["id"], str(sys.argv[3]), str(sys.argv[4]))
+
+       
 
     drive_service.close()
 

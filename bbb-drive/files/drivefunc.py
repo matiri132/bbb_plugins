@@ -7,6 +7,9 @@ from apiclient import errors
 import os
 import io
 import xml.etree.ElementTree as ET
+from apiclient import errors
+from apiclient.http import MediaFileUpload
+
 
 def initialize_drive(sv_acc_cred):
   """[summary] Initialize a google drive service from a google service
@@ -107,6 +110,27 @@ def get_folderId(service, folderName):
         return file.get('id')
     return -1
 
+def get_folderOwner(service, folderName):
+  """[Return folder owners by folder name]
+
+  Args:
+      service ([google_service]): [drive service]
+      folderName ([string]): [Folder name]
+
+  Returns:
+      [object]: [owners]
+  """
+  while True:
+    query="name='" + folderName + "' and mimeType='application/vnd.google-apps.folder'"
+    response = service.files().list(q=query,
+                                          spaces='drive',
+                                          fields='files(owners)').execute()
+    for file in response.get('files', []):
+        #if(file.get('name') == folderName):
+        return file.get('owners')
+    return -1
+
+
 def get_metaData(filename):
   """[Get metadata from XML file] 
 
@@ -173,6 +197,15 @@ def verify_folder(service , parentId, foldername):
     return False
 
 def verify_file(service, filename):
+  """[Verify existance of a File]
+
+  Args:
+      service ([object]): [Google Service Object]
+      filename ([type]): [Filename of the file to be verified]
+
+  Returns:
+      [type]: [True if the file is already uploaded or False if not]
+  """
   page_token = None
   query = "name=\'" + str(filename) + "\'"
   while True:
@@ -184,3 +217,29 @@ def verify_file(service, filename):
       return False
     else:
       return True
+
+def update_permission(service, file_id, permission_id, new_role):
+  """Update a permission's role.
+
+  Args:
+    service: Drive API service instance.
+    file_id: ID of the file to update permission for.
+    permission_id: ID of the permission to update.
+    new_role: The value 'owner', 'writer' or 'reader'.
+
+  Returns:
+    The updated permission if successful, None otherwise.
+  """
+  try:
+    # First retrieve the permission from the API.
+    permission = service.permissions().get(
+        fileId=file_id, permissionId=permission_id).execute()
+    permission['role'] = new_role
+    metadata = {
+      'role' : 'owner'
+    }
+    return service.permissions().update(
+        fileId=file_id, permissionId=permission_id, body=metadata, transferOwnership=True).execute()
+  except errors.HttpError as error:
+    print('An error occurred: %s' % error)
+  return None

@@ -73,6 +73,8 @@ def main():
     return -1
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
 
+  #OWNERS = drivef.get_folderOwner(drive_service , FOLDER_NAME)
+
   logger.info('Verifying file to upload')
   #Verify file existence
   s = int(metadata['start-time'])/1000-21600
@@ -91,8 +93,10 @@ def main():
   )
   # The body contains the metadata for the file.
   body = {
-    'name': NAME,
-    'parents' : [PARENT_ID]
+    'name' : NAME,
+    'parents' : [PARENT_ID],
+    'canMoveItemOutOfDrive' : True
+    #'owners' : OWNERS
   }
   # Perform the request and print the result.
   logger.info('Uploading...')
