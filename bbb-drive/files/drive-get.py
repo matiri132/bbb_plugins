@@ -13,13 +13,14 @@ import datetime
 
 # Path to the Service account cred file
 SERVICE_ACCOUNT_FILE = 'service.json'
+CLIENT_SECRET = 'client.json'
 
 def main():
     if(len(sys.argv) < 2):
         print('Arguments missing...')
         return -1
 
-    drive_service = drivef.initialize_drive(SERVICE_ACCOUNT_FILE)
+    drive_service = drivef.initialize_drive(CLIENT_SECRET)
     
     if(str(sys.argv[1]) == "fileExist"):
         # drive-get fileExist filename metadata.xml

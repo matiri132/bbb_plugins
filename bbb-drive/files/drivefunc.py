@@ -13,7 +13,6 @@ import httplib2
 import os
 import io
 import xml.etree.ElementTree as ET
-from __future__ import print_function
 import pickle
 
 
@@ -39,6 +38,8 @@ def initialize_drive(client_secret):
   if(os.path.exists('token.pickle')):
     with open('token.pickle', 'rb') as token:
       creds = pickle.load(token)
+  else:
+      creds = None
   # If there are no (valid) credentials available, let the user log in.
   if(not creds or not creds.valid):
     if(creds and creds.expired and creds.refresh_token):
