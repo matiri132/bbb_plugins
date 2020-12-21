@@ -1,17 +1,23 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-import httplib2
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
 import googleapiclient.http
-import oauth2client.client
 from apiclient import errors
+from apiclient.http import MediaFileUpload
+from apiclient import errors
+import oauth2client.client
+import httplib2
 import os
 import io
 import xml.etree.ElementTree as ET
-from apiclient import errors
-from apiclient.http import MediaFileUpload
+from __future__ import print_function
+import pickle
 
 
-def initialize_drive(sv_acc_cred):
+def initialize_drive_srvc_acc(sv_acc_cred):
   """[summary] Initialize a google drive service from a google service
       account credential.
   Args:
@@ -27,6 +33,29 @@ def initialize_drive(sv_acc_cred):
   #service creation
   drive = build('drive', 'v3', credentials=scoped_credentials, cache_discovery=False)
   return drive
+
+def initialize_drive(client_secret):
+  SCOPES = ['https://www.googleapis.com/auth/drive']
+  if(os.path.exists('token.pickle')):
+    with open('token.pickle', 'rb') as token:
+      creds = pickle.load(token)
+  # If there are no (valid) credentials available, let the user log in.
+  if(not creds or not creds.valid):
+    if(creds and creds.expired and creds.refresh_token):
+      creds.refresh(Request())
+    else:
+      flow = InstalledAppFlow.from_client_secrets_file(
+      client_secret, SCOPES)
+      creds = flow.run_local_server(port=0)
+      # Save the credentials for the next run
+      with open('token.pickle', 'wb') as token:
+        pickle.dump(creds, token)
+  scoped_credentials = creds.with_scopes(['https://www.googleapis.com/auth/drive'])
+  drive = build('drive', 'v3', credentials=scoped_credentials, cache_discovery=False)
+  return drive
+
+
+
 
 def delete_file(service, file_id):
   """[summary] Delete a file with file_id from a 
