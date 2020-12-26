@@ -58,7 +58,7 @@ def main():
   metadata = drivef.get_metaData(str(sys.argv[2]))
   
   #Create drive service based on service account credentials
-  drive_service = drivef.initialize_drive(SERVICE_ACCOUNT_FILE)
+  drive_service = drivef.initialize_drive_srvc_acc(SERVICE_ACCOUNT_FILE)
   logger.info('Verifying drive folders')
   #Get bbb-recordings folder id f rom Drive
   FOLDER_NAME = drivef.get_folderName(SERVERLIST, metadata['server-name'])
