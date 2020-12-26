@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bbb-drive",
+  "private_key_id": "821df746b473bf0e23b150297da0552f8c25d169",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCs2pcgwL9bNHo8\np7IQxAn7KcHAe5t6kgu4mOO9wOvBpTdz3/Pvbh5wlUNrQX2fnneHovW0D5ScLmdA\nOHOVHBsOm+NMMAL4cufZyQlzEnknrU8aUsqQrLc5ZhccEjx5ekvopPsdzd4Gd3BM\nOuLp6SIiEB9g4mA2LCrhfirWK0Q7QC2pHM7Kl47oYB7vFfAPE0WNEiRKIxEdiB7s\nL7HHg+yQF75yZF7D6wPBvT+3TdrPgx76i60SW7nI6qfoidjEcnaUxzJ3oYKOldt4\n14Vc5dh45qQ2namJcXhJKMsV+Lr9NTIEbzWvCm3Fs6fMlPhuE0HqsjpshpvrJfUK\n7QfYfW1FAgMBAAECggEABHKv/4+Lh7baqC5AiwHni2dCHx2rnQSB+SbCetvG7jK9\n+QGYUnto8gGaoBXw5ryd27Idm5voXRZJDB6u4BHbFNTvcKY8hjievWdKvWcYg+wy\ncnZL1CMExOQ+iOIqznEBNUeZj4/j9S8WFVyKHktA2H43frdp6Cy95b4+Ep4i2j00\n/P1PrZJ3NbAPYjtRX1nni6flqi3H3un5q7KJmZ1hEyinMnQ5XwnJ5AiDk6HqDdcJ\nwwQtWFLnG1TYQrmIJWUOSdAVoc+nAxV0gqc+7G8D80JW3USeXk1G3wFmiO6rERIK\ngAk/in8C/HOwmedSRSnN5pAnjKgvVFzyQ81OGBNCuQKBgQDq23bsamNYemMZBY7N\n5IKhZrvYqF0bg5CL6rqFrVADVYlQoJJheWG3bOgj4qK+bVoruLKnfVxl6I7qfXyx\nME2UdEzepqLLr/XwA0+eZn3ING4taFR3clKqSRHKDSnQlERu99iE/S9TGGdpDR5c\ntgay7dPZrHZ+NuwphOW//DCluwKBgQC8ajD3J/uf9P9j8wkIMQQ+PdUZj4G1vZQs\n6Wh+fTINYFhNCB37lOBkCfwhLAv45lzTGfNp5T6P8/+TYnsghdPWUsjf7O7v73Q6\nyGHqYm3Orrgqw4CbVSRLNVAmbXQj5Z5ISG99OSSEtr3d5QUandPCX/fLqXfqJOtw\nZfI2naeI/wKBgB9NdxFVsL4XOeQY4IrCvUKD7d+XuSk0pOxxMcElc3euS+oKLNh/\nFC4dfudhiq1058LSEEXQqKMQlxPb++Wl+YEi6yf179bUMiR2XINRR8yKaHD26eMt\nwqTdrlhO3tblHCXqNNqs4ETkCMxwqi5TOJtapZTqrrRt35Y9F146X8WHAoGBAKGz\nbUSgruYPyKNJ8EV0c9TLEjl2nPaRtjp5MvHjlnI+bmnl/n1svst8ekMp3ziE08Nk\nsS//y5qV6JDf4xX9ZNm6gKUVXdbTpefRE5+pS94muu4QjS5CevyEy72/D/7C0P3u\nFKjewsWXZAmsxJ2cOCHIZQ0H618qwljbVW2kDiWXAoGBAMHKodkXpd7P6cRHxLjK\nXcO7CVRu4BwcdAZsZuYtcHCen/OgnL6oIRrT5M/JFrRnuDHnDi63oMWoliUsYcUN\nNgqpFxG07YwTdCFY1OizSSpY0Zx3naQnVeUCdgDkWZgUNGTkhNxyj4Be7+5bGA0q\ni3vGQWlPKOdfwxxGIKUH8Qyn\n-----END PRIVATE KEY-----\n",
+  "client_email": "bbb-drive-service@bbb-drive.iam.gserviceaccount.com",
+  "client_id": "107068897078311382918",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bbb-drive-service%40bbb-drive.iam.gserviceaccount.com"
+}

@@ -1,1 +1,7 @@
-{"web":{"client_id":"949593762286-2ddbg3nohg5grd90gfrruo3or2599h1n.apps.googleusercontent.com","project_id":"bbb-drive","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"TOVADyX1SZrkATrXpjnf1lsy","redirect_uris":["https://developers.google.com/oauthplayground"]}}
+{
+  "access_token": "ya29.a0AfH6SMCIw57Cp6yS7kTBvSwVXZzAO4VJ3Zp3Z5Aph2-jgWNuDIGMpRVNkEI5AKuu_t1f87OUQTjANcTJx-7_p4x53d--p-oIwfCzlIGPsqENduGHkmBI_1zr6wN6c4XqR3s76-G2MRhrghLdX39L7SEP0bjZkk69N4VcBgJw8YA", 
+  "scope": "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.metadata", 
+  "token_type": "Bearer", 
+  "expires_in": 3599, 
+  "refresh_token": "1//04HkQ6o6VRJqvCgYIARAAGAQSNwF-L9Irc21S4Yfol6Fqqc1CbKzFHcHcxcvxytU1SZ6YEMF5py6zMt1vhjEVDlX_j5aa7Yy3krE"
+}
