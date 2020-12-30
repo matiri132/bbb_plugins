@@ -18,7 +18,6 @@ import pickle
 
 CLIENT_ID = "949593762286-scn59tlk12drlvmisbqcs5dd17llrgot.apps.googleusercontent.com"
 CLIENT_SCRT = "zwpm6-o-GhuOqywqOWKt8McW"
-ACCESS_TOKEN = "ya29.a0AfH6SMDX6kk7uQ9dseFymQrmrwSC6cEvSIbTDhvffFM_Mx3V_l_fBwwDBt7bW9k6phV65EnrcWkIpeYNOKrtEytP2QhH_QVqe1whLbIIS1t24idzwleo5GCECnici44CGSxdzjbf2d6ezTEG2Rinev2qer06C_u4kQD-Tgqu7kI"
 REFRESH_TOKEN = "1//04_rYqCuo-imdCgYIARAAGAQSNwF-L9IrFwnsFYvdBcJxkMW-VWkl9a9fQ6LwHqb9VqK1XfmPkBK0gkPn-eoilakOpAK8vsiUguY"
 
 
@@ -40,8 +39,13 @@ def initialize_drive_srvc_acc(sv_acc_cred):
   return drive
 
 def initialize_drive():
+  """Initialize a google drive service from a refresh token (From Playground)
+
+  Returns:
+      [service]: [Google drive API service]
+  """
   SCOPES = ['https://www.googleapis.com/auth/drive']
-  creds = oauth2client.client.GoogleCredentials(ACCESS_TOKEN,CLIENT_ID,CLIENT_SCRT,
+  creds = oauth2client.client.GoogleCredentials(None,CLIENT_ID,CLIENT_SCRT,
                                           REFRESH_TOKEN,None,"https://accounts.google.com/o/oauth2/token","APIs-Google")
   http = creds.authorize(httplib2.Http())
   creds.refresh(http)
@@ -242,29 +246,3 @@ def verify_file(service, filename):
       return False
     else:
       return True
-
-def update_permission(service, file_id, permission_id, new_role):
-  """Update a permission's role.
-
-  Args:
-    service: Drive API service instance.
-    file_id: ID of the file to update permission for.
-    permission_id: ID of the permission to update.
-    new_role: The value 'owner', 'writer' or 'reader'.
-
-  Returns:
-    The updated permission if successful, None otherwise.
-  """
-  try:
-    # First retrieve the permission from the API.
-    permission = service.permissions().get(
-        fileId=file_id, permissionId=permission_id).execute()
-    permission['role'] = new_role
-    metadata = {
-      'role' : 'owner'
-    }
-    return service.permissions().update(
-        fileId=file_id, permissionId=permission_id, body=metadata, transferOwnership=True).execute()
-  except errors.HttpError as error:
-    print('An error occurred: %s' % error)
-  return None

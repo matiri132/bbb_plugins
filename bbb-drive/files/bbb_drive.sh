@@ -7,6 +7,8 @@ ACT_HOUR=$(/bin/date +%s)
 LAST_HOUR=$(/bin/date +%s)
 LOG_TIME=$(/bin/date +%s)
 
+DEBUG="DEBUGSTATE"
+
 #shopt -s nullglob
 
 refresh_log(){
@@ -21,7 +23,10 @@ refresh_log(){
         cat /var/log/bbb_drive.log | grep -A 4 "UPLOAD INFO: {'id'" >> /var/log/bbb_drive_ok.log
         cat /var/log/bbb_drive.log >> /var/log/bbb_drive.log.bk
         cat /dev/null > /var/log/bbb_drive.log
-
+        if [ "${DEBUG}" == "FALSE" ]
+        then 
+            cat /dev/null > /var/log/bbb_drive_debug.log
+        fi
     fi
 
     day_elap=$(((${ACT_HOUR} - ${LOG_TIME})/86400 ))

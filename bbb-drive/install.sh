@@ -10,6 +10,8 @@ PATH_PRES="/mnt/scalelite-recordings/var/bigbluebutton/published/presentation"
 LOG_D=7
 #Path of bbb-recorder installation
 APPDIR="/root/bbb-drive"
+#Debug MODE on
+DEBUG_D="FALSE"
 
 ##
 # LOGS in: 
@@ -31,6 +33,7 @@ case $1 in
         sed -i "s|PATHCONV|"${PATH_CONV}"|g" ${WD}/bbb_drive.sh
         sed -i "s|PATHPRES|"${PATH_PRES}"|g" ${WD}/bbb_drive.sh
         sed -i "s|LOGDAYS|"${LOG_D}"|g" ${WD}/bbb_drive.sh
+        sed -i "s|DEBUGSTATE|"${DEBUG_D}"|g" ${WD}/bbb_drive.sh
 
         cp ${WD}/files/bbb_drive.service ${WD}/bbb_drive.service
         sed -i "s|APPDIR|"${APPDIR}"|g" ${WD}/bbb_drive.service

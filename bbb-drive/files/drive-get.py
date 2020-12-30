@@ -73,6 +73,24 @@ def main():
             if page_token is None:
                 break
 
+    if(str(sys.argv[1]) == "delByQuery"):            
+        page_token = None
+        query = sys.argv[2]
+        while True:
+            response = drive_service.files().list(q=query, #
+                                          spaces='drive',
+                                          fields='*',
+                                          pageToken=page_token).execute()
+            if not response.get('files' , []):
+                print("Empty")
+            for file in response.get('files', []):
+            # Process change
+                drivef.delete_file(drive_service , file.get('id'))
+                
+            page_token = response.get('nextPageToken', None)
+            if page_token is None:
+                break
+
     if(str(sys.argv[1]) == "list"):            
         page_token = None
         if(str(sys.argv[2]) == "folder"):
