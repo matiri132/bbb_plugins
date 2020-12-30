@@ -24,7 +24,6 @@ SERVERLIST = "serverlist.xml"
 
 def main():
   
-  
      #Verify args
   if(len(sys.argv) < 3):
     logger.error('[Errno: 01] No file especified. Syntaxis: bbb-drive filename metadatafile')
@@ -32,10 +31,10 @@ def main():
 
   logger.info('Init bbb-drive info: ' + str(sys.argv[1]) + " - " + str(sys.argv[2]) )
   # Path to the Service account cred file
-  SERVICE_ACCOUNT_FILE = 'service.json'
-  if not os.path.exists(SERVICE_ACCOUNT_FILE):
-    logger.error("[Errno: 00] No credentials file found. Get credentials and save in the directory as service.json")    
-    return -1
+ # SERVICE_ACCOUNT_FILE = 'service.json'
+ # if not os.path.exists(SERVICE_ACCOUNT_FILE):
+ #   logger.error("[Errno: 00] No credentials file found. Get credentials and save in the directory as service.json")    
+ #   return -1
 
  # Path to the file to upload passed as argument.
   FILENAME = str(sys.argv[1])
@@ -58,7 +57,12 @@ def main():
   metadata = drivef.get_metaData(str(sys.argv[2]))
   
   #Create drive service based on service account credentials
-  drive_service = drivef.initialize_drive_srvc_acc(SERVICE_ACCOUNT_FILE)
+  #drive_service = drivef.initialize_drive_srvc_acc(SERVICE_ACCOUNT_FILE)
+  drive_service = drivef.initialize_drive()
+  if(drive_service == None):
+    logger.error("[Errno: 06] Fail to create drive service. ")
+    return -1
+
   logger.info('Verifying drive folders')
   #Get bbb-recordings folder id f rom Drive
   FOLDER_NAME = drivef.get_folderName(SERVERLIST, metadata['server-name'])
@@ -72,8 +76,6 @@ def main():
     logger.error("[Errno: 05] Failed to create folder on drive. "  + str(FILENAME))
     return -1
   PARENT_ID = drivef.get_folderId(drive_service , metadata['context'])
-
-  #OWNERS = drivef.get_folderOwner(drive_service , FOLDER_NAME)
 
   logger.info('Verifying file to upload')
   #Verify file existence
@@ -96,7 +98,6 @@ def main():
     'name' : NAME,
     'parents' : [PARENT_ID],
     'canMoveItemOutOfDrive' : True
-    #'owners' : OWNERS
   }
   # Perform the request and print the result.
   logger.info('Uploading...')

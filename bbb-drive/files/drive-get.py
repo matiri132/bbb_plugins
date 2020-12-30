@@ -20,7 +20,8 @@ def main():
         print('Arguments missing...')
         return -1
 
-    drive_service = drivef.initialize_drive(CLIENT_SECRET)
+    #drive_service = drivef.initialize_drive_srvc_acc(SERVICE_ACCOUNT_FILE)
+    drive_service = drivef.initialize_drive()
     
     if(str(sys.argv[1]) == "fileExist"):
         # drive-get fileExist filename metadata.xml

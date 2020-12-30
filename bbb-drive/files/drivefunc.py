@@ -16,6 +16,12 @@ import xml.etree.ElementTree as ET
 import pickle
 
 
+CLIENT_ID = "949593762286-scn59tlk12drlvmisbqcs5dd17llrgot.apps.googleusercontent.com"
+CLIENT_SCRT = "zwpm6-o-GhuOqywqOWKt8McW"
+ACCESS_TOKEN = "ya29.a0AfH6SMDX6kk7uQ9dseFymQrmrwSC6cEvSIbTDhvffFM_Mx3V_l_fBwwDBt7bW9k6phV65EnrcWkIpeYNOKrtEytP2QhH_QVqe1whLbIIS1t24idzwleo5GCECnici44CGSxdzjbf2d6ezTEG2Rinev2qer06C_u4kQD-Tgqu7kI"
+REFRESH_TOKEN = "1//04_rYqCuo-imdCgYIARAAGAQSNwF-L9IrFwnsFYvdBcJxkMW-VWkl9a9fQ6LwHqb9VqK1XfmPkBK0gkPn-eoilakOpAK8vsiUguY"
+
+
 def initialize_drive_srvc_acc(sv_acc_cred):
   """[summary] Initialize a google drive service from a google service
       account credential.
@@ -33,29 +39,18 @@ def initialize_drive_srvc_acc(sv_acc_cred):
   drive = build('drive', 'v3', credentials=scoped_credentials, cache_discovery=False)
   return drive
 
-def initialize_drive(client_secret):
+def initialize_drive():
   SCOPES = ['https://www.googleapis.com/auth/drive']
-  if(os.path.exists('token.pickle')):
-    with open('token.pickle', 'rb') as token:
-      creds = pickle.load(token)
-  else:
-      creds = None
-  # If there are no (valid) credentials available, let the user log in.
-  if(not creds or not creds.valid):
-    if(creds and creds.expired and creds.refresh_token):
-      creds.refresh(Request())
-    else:
-      flow = InstalledAppFlow.from_client_secrets_file(
-      client_secret, SCOPES)
-      creds = flow.run_local_server(port=0)
-      # Save the credentials for the next run
-      with open('token.pickle', 'wb') as token:
-        pickle.dump(creds, token)
-  scoped_credentials = creds.with_scopes(['https://www.googleapis.com/auth/drive'])
-  drive = build('drive', 'v3', credentials=scoped_credentials, cache_discovery=False)
+  creds = oauth2client.client.GoogleCredentials(ACCESS_TOKEN,CLIENT_ID,CLIENT_SCRT,
+                                          REFRESH_TOKEN,None,"https://accounts.google.com/o/oauth2/token","APIs-Google")
+  http = creds.authorize(httplib2.Http())
+  creds.refresh(http)
+  scoped_credentials = creds.create_scoped(SCOPES)
+  try:
+    drive = build('drive', 'v3', credentials=scoped_credentials, cache_discovery=False)
+  except:
+    drive = None
   return drive
-
-
 
 
 def delete_file(service, file_id):
