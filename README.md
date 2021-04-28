@@ -86,6 +86,8 @@ APPDIR= Path for bbb-drive installation
 
 Set foldernames by the server name adding a line in /files/serverlist.xml
 Format: <server name="servername">FOLDERNAME</server>
+
+The folder must be shared to the gsuite administrator account. (IS NOT USING SERVICE ACCOUNT)
 ```
 4. Install (with SUDO or root user without sudo):
 ```
